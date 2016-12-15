@@ -1,7 +1,13 @@
-Let's Code - Week1
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+Let's Code - Week 1
 ========================================================
 author: Adrien ROUX
-date: January 2017
+date: January, 2017
 autosize: true
 
 Getting started with R (1/.)
@@ -32,6 +38,7 @@ Link to **GitHub**: <https://github.com/Yenyenx/LetsCode-Contents>
 
 R Nuts and Bolts (1/.)
 ========================================================
+class: small-code
 
 Enough talking... Let's start coding. As we go through some exercices, I'll take some time to give you more background on **R**, my favorite IDE **RStudio**, **Git** and **GitHub**.
 
@@ -54,11 +61,14 @@ print(x);
 
 x is equal to 1 and y equals 10.
 
-A first example (1/.)
+R Nuts and Bolts (2/.)
 ========================================================
+class: small-code
 
-- be familiar with the help embedded in the IDE: **?function.name**, e.g. *?strsplit*,
-- be familiar with warnings and error messages sent by the **R** console.
+You should become familiar with:
+- the help embedded in the IDE: **?function.name**, e.g. *?strsplit*,
+- warnings and error messages sent by the **R** console,
+- 
 
 
 Quick review of the basic algebra operations : +, -, *, / and first manipulation with *string*
@@ -85,6 +95,7 @@ strsplit(str1, "_")
 
 A more advanced example (1/.)
 ========================================================
+class: small-code
 
 R base package comes with standard datasets often used to present method behavior and test packages. Here is the *cars* dataset.
 
@@ -105,8 +116,13 @@ summary(cars)
 
 A more advanced example (2/.)
 ========================================================
+class: small-code
 
 Here is the simplest way to present a graph. Even when coding, taking some time to briefly look at the data using a quickly generated graph is a good practice.
 
 ![plot of chunk unnamed-chunk-6](Week1-figure/unnamed-chunk-6-1.png)
+
+
+
+
 
