@@ -122,7 +122,145 @@ Here is the simplest way to present a graph. Even when coding, taking some time 
 
 ![plot of chunk unnamed-chunk-6](Week1-figure/unnamed-chunk-6-1.png)
 
+R objects (1/.)
+========================================================
+class: small-code
+
+R has 5 basic or **atomic** classes of objects:
+- character
+- numeric (or real numbers)
+- integer
+- complex
+- logical (True/False)
+
+```r
+x <- 'hello'
+x <- 1 # If you explicitly want an integer, you need to specify the L suffix. So entering 1 in R gives you a numeric object; entering 1L explicitly gives you an integer object
+x <- 1L
+x <- 1 + 1i #so be careful when using i...
+x <- 2 < 1;
+```
+
+R objects (2/.)
+========================================================
+class: small-code
+
+The most basic type of R object is a **vector**. Empty vectors can be created with the **vector()** function. There is really only one rule about vectors in R : **A vector can only contain objects of the same class.**
 
 
+```r
+x <- c(0.5, 0.6) ## numeric
+x <- c(TRUE, FALSE) ## logical
+x <- c(T, F) ## logical
+x <- c("a", "b", "c") ## character
+x <- 9:29 ## integer
+x <- c(1+0i, 2+4i) ## complex
+```
+
+
+```r
+x <- vector("numeric", length = 10)
+x
+```
+
+```
+ [1] 0 0 0 0 0 0 0 0 0 0
+```
+
+But of course, like any good rule, there is an exception : **list**. A list is represented as a vector but can contain objects of different classes. That’s usually why we use them.
+
+R objects (3/.)
+========================================================
+class: small-code
+
+R objects can have **attributes**, which are like *metadata* for the object. These metadata can be very useful in that they help to describe the object. 
+
+For example, column names on a data frame help to tell us what data are contained in each of the columns. Some examples of R object attributes are:
+
+- **names**, **dimnames**
+- **dimensions** (e.g. matrices, arrays),
+- **class** (e.g. integer, numeric),
+- **length**,
+- other user-defined attributes/metadata.
+
+Attributes of an object (if any) can be accessed using the **attributes()** function. Not all R objects contain attributes, in which case the attributes() function returns **NULL**.
+
+R objects : Mixing objects (4/.)
+========================================================
+class: small-code
+
+There are occasions when different classes of R objects get mixed together. Sometimes this happens by accident but it can also happen on purpose. So what happens with the following code?
+
+
+```r
+y <- c(1.7, "a") ## character
+y <- c(TRUE, 2) ## numeric
+y <- c("a", TRUE) ## character
+```
+
+In each case above, we are mixing objects of two different classes in a vector. But remember that the only rule about vectors says this is not allowed. When different objects are mixed in a vector, **coercion** occurs so that every element in the vector is of the same class.
+
+In the example above, we see the effect of **implicit coercion**. What R tries to do is find a way to represent all of the objects in the vector in a reasonable fashion. Sometimes this does exactly what you want and… sometimes not.
+
+R objects : Mixing objects (5/.)
+========================================================
+class: small-code
+
+Objects can be explicitly coerced from one class to another using the **as.*** functions, if available.
+
+
+```r
+x <- 0:6;
+as.numeric(x)
+```
+
+```
+[1] 0 1 2 3 4 5 6
+```
+
+```r
+as.logical(x)
+```
+
+```
+[1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+```
+
+```r
+as.character(x)
+```
+
+```
+[1] "0" "1" "2" "3" "4" "5" "6"
+```
+
+Design of the R system
+========================================================
+
+R functionality is divided into 2 conceptual parts:
+
+- The base R system contains, among other things, the base package which is required to run R and contains the most fundamental functions.
+
+- The other packages contained in the “base” system include utils, stats, datasets, graphics, grDevices, grid, methods, tools, parallel, compiler, splines, tcltk, stats4.
+
+- There are also “Recommended” packages: boot, class, cluster, codetools, foreign, KernSmooth, lattice, mgcv, nlme, rpart, survival, MASS, spatial, nnet, Matrix.
+
+List
+========================================================
+
+Matrices
+========================================================
+
+Factors
+========================================================
+
+Missing values
+========================================================
+
+Data frames
+========================================================
+
+Names
+========================================================
 
 
