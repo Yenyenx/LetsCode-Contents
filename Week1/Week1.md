@@ -10,7 +10,7 @@ author: Adrien ROUX
 date: January, 2017
 autosize: true
 
-Getting started with R (1/.)
+Getting started with R (1/2)
 ========================================================
 
 R works on pretty much every platform available, including the widely available Windows, Mac OS X, and Linux systems. To get started you basically need 2 things :
@@ -22,7 +22,7 @@ R works on pretty much every platform available, including the widely available 
 Links for download: 
 
 
-Getting started with R (2/.)
+Getting started with R (2/2)
 ========================================================
 
 In XXI century, coding often happens in group/team. Sharing (public or restricted) often allows you to leverage on other's work. Other developers may send you suggestions so you benefit from other's ideas or experience. 
@@ -36,7 +36,7 @@ Usually for professional developers, code is shared over private repositories st
 Link to **GitHub**: <https://github.com/Yenyenx/LetsCode-Contents>
 
 
-R Nuts and Bolts (1/.)
+R Nuts and Bolts (1/2)
 ========================================================
 class: small-code
 
@@ -61,7 +61,7 @@ print(x);
 
 x is equal to 1 and y equals 10.
 
-R Nuts and Bolts (2/.)
+R Nuts and Bolts (2/2)
 ========================================================
 class: small-code
 
@@ -93,7 +93,7 @@ strsplit(str1, "_")
 [1] "Default" "Name"    "0101"   
 ```
 
-A more advanced example (1/.)
+A more advanced example (1/2)
 ========================================================
 class: small-code
 
@@ -114,7 +114,7 @@ summary(cars)
  Max.   :25.0   Max.   :120.00  
 ```
 
-A more advanced example (2/.)
+A more advanced example (2/2)
 ========================================================
 class: small-code
 
@@ -122,7 +122,7 @@ Here is the simplest way to present a graph. Even when coding, taking some time 
 
 ![plot of chunk unnamed-chunk-6](Week1-figure/unnamed-chunk-6-1.png)
 
-R objects (1/.)
+R objects (1/5)
 ========================================================
 class: small-code
 
@@ -141,7 +141,7 @@ x <- 1 + 1i #so be careful when using i...
 x <- 2 < 1;
 ```
 
-R objects (2/.)
+R objects (2/5)
 ========================================================
 class: small-code
 
@@ -169,7 +169,7 @@ x
 
 But of course, like any good rule, there is an exception : **list**. A list is represented as a vector but can contain objects of different classes. That’s usually why we use them.
 
-R objects (3/.)
+R objects (3/5)
 ========================================================
 class: small-code
 
@@ -185,7 +185,7 @@ For example, column names on a data frame help to tell us what data are containe
 
 Attributes of an object (if any) can be accessed using the **attributes()** function. Not all R objects contain attributes, in which case the attributes() function returns **NULL**.
 
-R objects : Mixing objects (4/.)
+R objects : Mixing objects (4/5)
 ========================================================
 class: small-code
 
@@ -202,7 +202,7 @@ In each case above, we are mixing objects of two different classes in a vector. 
 
 In the example above, we see the effect of **implicit coercion**. What R tries to do is find a way to represent all of the objects in the vector in a reasonable fashion. Sometimes this does exactly what you want and… sometimes not.
 
-R objects : Mixing objects (5/.)
+R objects : Mixing objects (5/5)
 ========================================================
 class: small-code
 
@@ -504,3 +504,4 @@ Assignement for next week
 * Create Github account and *fork* **Let's Code** repo,
 * Write an R script (e.g. **Assignement1.R**) where you create a data.frame with missing values and at least 1 factor. Commit the file under your Github repo so I can check it out, if you need me too.
 
+**Next Week:** Getting Data In and Out of R
