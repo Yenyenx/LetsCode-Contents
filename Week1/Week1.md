@@ -245,22 +245,262 @@ R functionality is divided into 2 conceptual parts:
 
 - There are also “Recommended” packages: boot, class, cluster, codetools, foreign, KernSmooth, lattice, mgcv, nlme, rpart, survival, MASS, spatial, nnet, Matrix.
 
+Make sure the list of repositories (e.g. **CRAN** or others) is up-to-date, trustworthy (See Misc folder for a short script to add an url to the list of repos).
+
 List
 ========================================================
+class: small-code
 
-Matrices
+Lists are a special type of vector that can contain elements of different classes. Lists are an important data type in R and you should get to know them well. Lists, in combination with the various *apply* functions discussed later, make for a powerful combination.
+
+Lists can be explicitly created using the list() function, which takes an arbitrary number of arguments.
+
+
+```r
+x <- list(1, "a", TRUE, 1 + 4i)
+```
+
+We can also create an empty list of a prespecified length with the vector() function.
+
+
+```r
+x <- vector("list", length = 5)
+```
+
+
+
+Matrices (1/2)
 ========================================================
+class: small-code
+
+Matrices are vectors with a dimension attribute. The dimension attribute is itself an integer vector of length 2 (number of rows, number of columns).
+
+
+```r
+m <- matrix(nrow = 2, ncol = 3)
+m
+```
+
+```
+     [,1] [,2] [,3]
+[1,]   NA   NA   NA
+[2,]   NA   NA   NA
+```
+
+```r
+dim(m)
+```
+
+```
+[1] 2 3
+```
+
+```r
+attributes(m)
+```
+
+```
+$dim
+[1] 2 3
+```
+
+Matrices (2/2)
+========================================================
+class: small-code
+
+Matrices are constructed column-wise, so entries can be thought of starting in the “upper left” corner and running down the columns.
+
+
+```r
+m <- matrix(1:6, nrow = 2, ncol = 3)
+m
+```
+
+```
+     [,1] [,2] [,3]
+[1,]    1    3    5
+[2,]    2    4    6
+```
+
+
+```r
+m <- 1:10
+dim(m) <- c(2, 5)
+m
+```
+
+```
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    3    5    7    9
+[2,]    2    4    6    8   10
+```
+
+Matrices can be created by column-binding or row-binding with the **cbind()** and **rbind()** functions.
 
 Factors
 ========================================================
+class: small-code
+
+Factors are used to represent **categorical data** and can be unordered or ordered. One can think of a factor as an integer table where each integer has a label.
+
+Using factors with labels is **better** than using integers because factors are self-describing. E.g. Having a variable that has values “Male” and “Female” is better than a variable that has values 1 and 2.
+
+
+```r
+x <- factor(c("yes", "yes", "no", "yes", "no"))
+table(x)
+```
+
+```
+x
+ no yes 
+  2   3 
+```
+
+```r
+unclass(x)
+```
+
+```
+[1] 2 2 1 2 1
+attr(,"levels")
+[1] "no"  "yes"
+```
+
 
 Missing values
 ========================================================
+class: small-code
+
+Missing values are denoted by **NA** or **NaN** for undefined mathematical operations.
+
+* **is.na()** is used to test objects if they are NA
+* **is.nan()** is used to test for NaN
+* NA values have a class also, so there are integer NA, character NA, etc.
+* A NaN value is also NA but the converse is not true
+
+
+```r
+x <- c(1, 2, NA, 10, 3)
+is.na(x)
+```
+
+```
+[1] FALSE FALSE  TRUE FALSE FALSE
+```
+
+```r
+is.nan(x)
+```
+
+```
+[1] FALSE FALSE FALSE FALSE FALSE
+```
 
 Data frames
 ========================================================
+class: small-code
 
-Names
+Data frames are used to store tabular data in R. They are a **very important** type of object in R and are used in a variety of statistical modeling applications.
+
+Unlike matrices, data frames can store different classes of objects in each column. Matrices must have every element be the same class (e.g. all integers or all numeric).
+
+In addition to column names, indicating the names of the variables or predictors, data frames have a special attribute called row.names which indicate information about each row of the data frame.
+
+
+```r
+x <- data.frame(foo = 1:4, bar = c(T, T, F, F))
+x
+```
+
+```
+  foo   bar
+1   1  TRUE
+2   2  TRUE
+3   3 FALSE
+4   4 FALSE
+```
+
+Names (1/2)
+========================================================
+class: small-code
+
+R objects can have names, which is very useful for writing readable code and self-describing objects. Here is an example of assigning names to an integer vector.
+
+
+```r
+x <- 1:3
+names(x)
+```
+
+```
+NULL
+```
+
+```r
+names(x) <- c("New York", "Los Angeles", "Chicago"); x["New York"]
+```
+
+```
+New York 
+       1 
+```
+
+Lists can also have names, which is often **very useful**.
+
+
+```r
+x <- list("Los Angeles" = 1, Boston = 2, London = 3); x$Boston
+```
+
+```
+[1] 2
+```
+
+Names (2/2)
+========================================================
+class: small-code
+
+
+```r
+m <- matrix(1:4, nrow = 2, ncol = 2)
+dimnames(m) <- list(c("a", "b"), c("c", "d"))
+m
+```
+
+```
+  c d
+a 1 3
+b 2 4
+```
+
+```r
+m["a","c"]
+```
+
+```
+[1] 1
+```
+
+Summary
 ========================================================
 
+**There are a variety of different built-in data types in R**. We have reviewed the following:
+
+* atomic classes: numeric, logical, character, integer, complex
+* vectors, lists
+* factors
+* missing values
+* data frames and matrices
+
+All R objects can have attributes that help to describe what is in the object. Perhaps the most useful attribute is **names**, such as column and row names in a data frame, or simply names in a vector or list. 
+
+**Attributes** like dimensions are also important as they can modify the behavior of objects, like turning a vector into a matrix.
+
+Assignement for next week
+========================================================
+
+* Finish installing R, RStudio and Git on your laptop,
+* Create Github account and *fork* **Let's Code** repo,
+* Write an R script (e.g. **Assignement1.R**) where you create a data.frame with missing values and at least 1 factor. Commit the file under your Github repo so I can check it out, if you need me too.
 
