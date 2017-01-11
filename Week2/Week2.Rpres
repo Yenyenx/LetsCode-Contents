@@ -10,6 +10,107 @@ author: Adrien ROUX
 date: January, 2017
 autosize: true
 
+Debrief de la Week 1
+========================================================
+class: small-code
+
+* Questions,
+* Open issues,
+* Missing installs,
+
+Control Strutures (1/.)
+========================================================
+class: small-code
+
+Control structures in R allow you to control the flow of execution of a series of R expressions. 
+
+Basically, they allow you to put some **logic** into your R code, rather than just always executing the same R code every time. 
+
+They allow you to respond to inputs or to features of the data and execute different R expressions accordingly.
+
+Control Strutures (2/.)
+========================================================
+class: small-code
+
+Commonly used control structures are:
+* **if** and **else**: testing a condition and acting on it
+* **for**: execute a loop a fixed number of times
+* **while**: execute a loop while a condition is true
+* **repeat**: execute an infinite loop (must break out of it to stop)
+* **break**: break the execution of a loop
+* **next**: skip an interation of a loop
+
+Control Strutures : If and Else (1/.)
+========================================================
+class: small-code
+
+
+Control Strutures : For (1/.)
+========================================================
+class: small-code
+
+
+
+Control Strutures : While (1/.)
+========================================================
+class: small-code
+
+
+Control Strutures : Repeat (1/.)
+========================================================
+class: small-code
+
+
+
+Functions (1/.)
+========================================================
+class: small-code
+
+Writing functions is a core activity of an R programmer. It represents the key step of the transition from a mere *user* to a developer who creates new functionality for R. 
+
+Functions are often used to encapsulate a sequence of expressions that need to be executed numerous times, perhaps under slightly different conditions. Functions are also often written when code must be shared with others or the public.
+
+The writing of a function allows a developer to create an interface to the code, that is explicitly specified with a set of parameters. This interface provides an abstraction of the code to potential users. This abstraction simplifies the users lives because it relieves them from having to know every detail of how the code operates. In addition, the creation of an interface allows the developer to communicate to the user the aspects of the code that are important or are most relevant.
+
+Functions (2/.)
+========================================================
+class: small-code
+
+STOP TALKING!
+
+**Your First Function:**
+Functions are defined using the function() directive and are stored as R objects just like anything else. In particular, they are R objects of class **function**.
+
+Here’s a simple function that takes no arguments and does nothing.
+```{r}
+f <- function() {
+## This is an empty function
+}
+```
+
+```{r}
+## Functions have their own class
+class(f)
+
+## Execute function
+f()
+```
+
+Functions (3/.)
+========================================================
+class: small-code
+
+Not very interesting, but it’s a start. The next thing we can do is create a function that actually has a non-trivial function body.
+
+```{r}
+f <- function() {
+  cat("Hello, wOrld!\n")
+}
+f()
+```
+
+
+
 Getting Data In and Out of R
 ========================================================
 class: small-code
