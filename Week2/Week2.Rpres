@@ -143,17 +143,25 @@ Functions (1/.)
 ========================================================
 class: small-code
 
-Writing functions is a core activity of an R programmer. It represents the key step of the transition from a mere *user* to a developer who creates new functionality for R. 
+Writing functions is a **core activity of an R programmer**. It represents the key step of the transition from a mere *user* to a developer who creates new functionality for R. 
 
-Functions are often used to encapsulate a sequence of expressions that need to be executed numerous times, perhaps under slightly different conditions. Functions are also often written when code must be shared with others or the public.
+Functions are used : 
+* **to encapsulate a sequence of expressions** that need to be executed numerous times, perhaps under slightly different conditions. 
+* **to write code that must be shared** with others or the public.
 
-The writing of a function allows a developer to create an interface to the code, that is explicitly specified with a set of parameters. This interface provides an abstraction of the code to potential users. This abstraction simplifies the users lives because it relieves them from having to know every detail of how the code operates. In addition, the creation of an interface allows the developer to communicate to the user the aspects of the code that are important or are most relevant.
+The writing of a function allows a developer to : 
+* create an interface to the code with an **explicit set of parameters**.
+* create an abstraction of the code to potential users (**Black Box**). *This abstraction simplifies the users lives* because it relieves them from having to know every detail of how the code operates.
 
-Functions (2/.)
+Functions in R (2/.)
 ========================================================
 class: small-code
 
-STOP TALKING!
+Functions in R can be treated much like any other R object. Importantly, they can be:
+* **passed as arguments** to other functions. This is very handy for the various apply funtions, like lapply() and sapply().
+* **nested**, so that you can define a function inside of another function.
+
+ENOUGH TALKING!
 
 **Your First Function:**
 Functions are defined using the function() directive and are stored as R objects just like anything else. In particular, they are R objects of class **function**.
@@ -165,6 +173,10 @@ f <- function() {
 }
 ```
 
+Functions in R (2/.)
+========================================================
+class: small-code
+
 ```{r}
 ## Functions have their own class
 class(f)
@@ -173,17 +185,47 @@ class(f)
 f()
 ```
 
-Functions (3/.)
-========================================================
-class: small-code
-
 Not very interesting, but it’s a start. The next thing we can do is create a function that actually has a non-trivial function body.
 
 ```{r}
-f <- function() {
-  cat("Hello, wOrld!\n")
-}
-f()
+x <- 1:10
+f <- function(x){ x+1 } #Note how using twice x for variable and function defintion does not matter at all.
+sapply(x,f)
 ```
+
+Functions in R (3/.)
+========================================================
+class: small-code
+
+A slighly more advanced use of functions:
+
+```{r}
+f <- function(Operation) {
+  # basic requirements for the function to work
+  stopifnot(is.character(Operation))
+  
+  if(Operation == "ADD") {
+    return(function(x,y){x+y}) 
+  } else if(Operation == "DIFF") {
+    return(function(x,y){x-y})
+  } else {
+    return(function(x,y){})
+  }
+}
+
+## Let's try it out
+g <- f("ADD"); g(1,2)
+
+g <- f("DIFF"); g(1,2)
+```
+
+Summary
+========================================================
+class: small-code
+
+
+Assignement for next week
+========================================================
+class: small-code
 
 
