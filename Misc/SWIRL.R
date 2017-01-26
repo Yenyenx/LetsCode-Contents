@@ -10,6 +10,7 @@
 # to follow these steps.
 
 # Download and install package from CRAN repository
+install.packages("stringi")
 install.packages("swirl")
 
 # Load library to make its functions available to you, 
