@@ -10,29 +10,33 @@ author: Adrien ROUX
 date: January, 2017
 autosize: true
 
-
 Getting Data In and Out of R
 ========================================================
 class: small-code
 
-multiple use cases:
-* data are available on your computer locally or through local network,
-* data are available through R repository => dataset reference,
-* data is stored in outside world... API + classic web
+Multiple use cases:
+* data are available **on your computer locally** or through **local network**,
+* data are available through **R repositories** => reference dataset,
+* data is stored in outside world...: classic web or API.
 
 
-Getting Data In and Out of R on your computer
+Basic file manipulation
 ========================================================
 class: small-code
 
 File manipulation in R:
-* file.create(..., showWarnings = TRUE)
-* file.exists(...)
-* file.remove(...)
-* file.rename(from, to)
-* file.append(file1, file2)
-* file.copy(from, to, overwrite = recursive, recursive = FALSE,
-copy.mode = TRUE, copy.date = FALSE)
+* **file.create(..., showWarnings = TRUE)** : creates files with the given names if they do not already exist and truncates them if they do. They are created with the maximal read/write permissions.
+
+* **file.exists(...)** :  returns a logical vector indicating whether the files exist. (Here *exists* is in the sense of the system's stat call: a file will be reported as existing only if you have the permissions needed.)
+
+Note that the existence of a file does not imply that it is readable.
+
+* **file.remove(...)** : attempts to remove the files named in its argument. On Windows, *file* means a regular file and not, say, an empty directory.
+
+* **file.rename(from, to)** : 
+
+* **file.append(file1, file2)** :
+* **file.copy(from, to, overwrite = recursive, recursive = FALSE, copy.mode = TRUE, copy.date = FALSE)** :
 
 There is more:
 file.info
@@ -40,12 +44,44 @@ file.access
 
 All these methods are available in base package.
 
+A first basic example
+========================================================
+class: small-code
+
+```{r}
+
+```
+
+Basic folder manipulation
+========================================================
+class: small-code
+
 folder manipulation:
-list.files()
-getwd()
-setwd()
-dir.create()
-dir.exists()
+* list.files()
+* getwd()
+* setwd()
+* dir.create()
+* dir.exists()
+
+A first basic example
+========================================================
+class: small-code
+
+```{r}
+
+```
+
+A more advanced example
+========================================================
+class: small-code
+
+```{r}
+
+```
+
+Reading data into R
+========================================================
+class: small-code
 
 There are a few principal functions reading data into R:
 
@@ -58,15 +94,21 @@ There are a few principal functions reading data into R:
 
 There are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.
 
-File manipulation in R
-========================================================
-class: small-code
-
-
-
 Using the readr Package
 ========================================================
 class: small-code
+
+```{r}
+
+```
+
+Reading data from MS Excel files
+========================================================
+class: small-code
+
+```{r}
+
+```
 
 Using Textual and Binary Formats for Storing Data
 ========================================================
@@ -83,10 +125,12 @@ Data are read in using connection interfaces. Connections can be made to files (
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
 
-Github
+Github configuration
 ========================================================
 In .gitconfig in %USERS%:
 [http]
 	proxy = http://proxy-fr.trading-lb.gdfsuez.net:8080
 [https]
 	proxy = https://proxy-fr.trading-lb.gdfsuez.net:8080
+
+
