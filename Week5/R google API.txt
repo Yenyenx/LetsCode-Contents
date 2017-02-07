@@ -1,0 +1,8 @@
+https://gist.github.com/josecarlosgonz/6417633
+https://www.r-bloggers.com/calling-google-maps-api-from-r/
+
+searchConsoleR 
+googleAuthR
+
+https://developers.google.com/apis-explorer/#p/
+https://developers.google.com/maps/documentation/directions/intro?hl=fr#traffic-model

@@ -56,7 +56,8 @@ class: small-code
 
 The **if-else** combination is probably the most commonly used control structure. It allows you to test a condition and act on it depending on whether it’s true or false.
 
-```{r}
+
+```r
 x <- "Hi everyone"
 #x <- "Hello Bob"
 #x <- 1
@@ -73,6 +74,10 @@ if(is.character(x)) {
 x
 ```
 
+```
+[1] "Hi all"
+```
+
 The **else** clause is not necessary. You could have a series of if clauses that always get executed if their respective conditions are true.
 
 Control Strutures : For Loops (1/.)
@@ -81,11 +86,19 @@ class: small-code
 
 **For loops** are pretty much the most common and only looping construct that you will need in R. While you may occasionally find a need for other types of loops, in my experience, I’ve found very few situations where a for loop wasn’t sufficient.
 
-```{r}
+
+```r
 x <- c("a", "b", "c", "d")
 for(j in 1:4) {
   print(x[j]) 
 }
+```
+
+```
+[1] "a"
+[1] "b"
+[1] "c"
+[1] "d"
 ```
 
 In R, for loops take an **iterator variable** (here *j*) and assign it successive values from a sequence (here *1:10*) or an object like a list, vector, etc.
@@ -98,11 +111,20 @@ class: small-code
 
 **While loops** begin by testing a **condition**. If it is *true*, then they execute the *loop body*. **Once the loop body is executed, the condition is tested again**, and so forth, until the condition is false, after which the loop exits.
 
-```{r}
+
+```r
 count <- 0
 while(count < 5) {
   print(count); count <- count + 1
 }
+```
+
+```
+[1] 0
+[1] 1
+[1] 2
+[1] 3
+[1] 4
 ```
 
 While loops can result in **infinite** loops if not written properly. **Use with care!**
@@ -117,7 +139,8 @@ class: small-code
 
 One possible paradigm might be in an iterative algorithm where you may be searching for a solution and you don’t want to stop until you’re close enough to the solution.
 
-```{r}
+
+```r
 iMax <- 3; i <- 1
 
 repeat {
@@ -130,6 +153,12 @@ repeat {
 }
 ```
 
+```
+[1] 1
+[1] 2
+[1] 3
+```
+
 
 Control Strutures : Next, Break (1/.)
 ========================================================
@@ -137,7 +166,8 @@ class: small-code
 
 **next** is used to skip an iteration of a loop.
 
-```{r}
+
+```r
 sum <- 0
 for(i in 1:100) {
   if(i <= 20) {
@@ -149,9 +179,14 @@ for(i in 1:100) {
 sum
 ```
 
+```
+[1] 80
+```
+
 **break** is used to exit a loop, regardless of what iteration the loop may be on.
 
-```{r}
+
+```r
 sum <- 0
 for(i in 1:100) {
   sum <- sum + 1
@@ -160,6 +195,10 @@ for(i in 1:100) {
   }
 }
 sum
+```
+
+```
+[1] 21
 ```
 
 
@@ -191,7 +230,8 @@ ENOUGH TALKING!
 Functions are defined using the function() directive and are stored as R objects just like anything else. In particular, they are R objects of class **function**.
 
 Here’s a simple function that takes no arguments and does nothing.
-```{r}
+
+```r
 f <- function() {
 ## This is an empty function
 }
@@ -201,20 +241,36 @@ Functions in R (2/.)
 ========================================================
 class: small-code
 
-```{r}
+
+```r
 ## Functions have their own class
 class(f)
+```
 
+```
+[1] "function"
+```
+
+```r
 ## Execute function
 f()
 ```
 
+```
+NULL
+```
+
 Not very interesting, but it’s a start. The next thing we can do is create a function that actually has a non-trivial function body.
 
-```{r}
+
+```r
 x <- 1:10
 f <- function(x){ x+1 } #Note how using twice x for variable and function defintion does not matter at all.
 sapply(x,f)
+```
+
+```
+ [1]  2  3  4  5  6  7  8  9 10 11
 ```
 
 Functions in R (3/.)
@@ -223,7 +279,8 @@ class: small-code
 
 A slighly more advanced use of functions:
 
-```{r}
+
+```r
 f <- function(Operation) {
   # basic requirements for the function to work
   stopifnot(is.character(Operation))
@@ -239,8 +296,18 @@ f <- function(Operation) {
 
 ## Let's try it out
 g <- f("ADD"); g(1,2)
+```
 
+```
+[1] 3
+```
+
+```r
 g <- f("DIFF"); g(1,2)
+```
+
+```
+[1] -1
 ```
 
 Arguments matching (1/)
@@ -249,11 +316,30 @@ class: small-code
 
 Calling an R function with arguments can be done in a variety of ways. R functions arguments can be matched **positionally** or **by name**. (Positional matching just means that R assigns the first value to the first argument, the second value to second argument, etc.)
 
-```{r}
+
+```r
 str(rnorm)
+```
+
+```
+function (n, mean = 0, sd = 1)  
+```
+
+```r
 mydata <- rnorm(100,2,1)
 sd(mydata, F)
+```
+
+```
+[1] 0.9578559
+```
+
+```r
 sd(na.rm = FALSE, x = mydata)
+```
+
+```
+[1] 0.9578559
 ```
 
 Arguments matching (2/)
@@ -262,9 +348,22 @@ class: small-code
 
 You can mix positional matching with matching by name. When an argument is matched by name, it is “taken out” of the argument list and the remaining unnamed arguments are matched in the order that they are listed in the function definition.
 
-```{r}
+
+```r
 sd(na.rm= F, mydata)
+```
+
+```
+[1] 0.9578559
+```
+
+```r
 args(sd)
+```
+
+```
+function (x, na.rm = FALSE) 
+NULL
 ```
 
 I don’t recommend messing around with the order of the arguments too much, since it can lead to some confusion.
@@ -275,11 +374,16 @@ class: small-code
 
 Arguments to functions are evaluated lazily, so they are evaluated only as needed in the body of the function.
 
-```{r}
+
+```r
 f <- function(a,b) {
   a^2
 }
 f(45)
+```
+
+```
+[1] 2025
 ```
 
 This function never actually uses the argument b, so calling *f(45)* will not produce an error because the 45 gets positionally matched to a. **This behavior can be good or bad**: It’s common to write a function that doesn’t use an argument and not notice it simply because R never throws an error.
@@ -291,17 +395,23 @@ class: small-code
 There is a special argument in R known as the ... argument, which indicate a variable number of arguments that are usually passed on to other functions. The ... argument is often used when extending another function and you don’t want to copy the entire argument list of the original
 function.
 
-```{r}
+
+```r
 myplot <- function(x, y, type= "l", ...) {
   plot(x, y, type= type, ...)
 }
-
 ```
 
 **Arguments Coming After the ... Argument:** any arguments that appear after ... on the argument list must be named explicitly and cannot be partially matched or matched positionally.
 
-```{r}
+
+```r
 args(paste)
+```
+
+```
+function (..., sep = " ", collapse = NULL) 
+NULL
 ```
 
 Summary
