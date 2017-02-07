@@ -7,4 +7,4 @@ It was agreed that once every 2 weeks new material will be introduced. The week 
 
 At some point, we will start a common project and split the coding between programmers. For now it is too early to tell when we will start. But you can still start thinking about the subject of this common project.
 
-Hello World
+Hello
