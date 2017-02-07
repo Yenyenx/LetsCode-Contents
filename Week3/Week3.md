@@ -4,7 +4,7 @@
 }
 </style>
 
-Let's Code - Week 2
+Let's Code - Week 3
 ========================================================
 author: Adrien ROUX
 date: January, 2017
@@ -15,8 +15,8 @@ Any feedback on last Week
 class: small-code
 
 1. Missing installs: R, Rstudio, Git...
-1. Questions: did you try some of the material discussed in Week 1 ?
-1. Open issues: regarding assignement 1 ?
+1. Questions: did you try some of the material discussed in Week 1 or 2 ?
+1. Any open issues ?
 
 
 Control Strutures
@@ -140,6 +140,24 @@ class: small-code
 One possible paradigm might be in an iterative algorithm where you may be searching for a solution and you don’t want to stop until you’re close enough to the solution.
 
 
+```r
+iMax <- 3; i <- 1
+
+repeat {
+  if(i > iMax) {
+    break
+  } else {
+    print(i)
+    i <- i + 1
+  }
+}
+```
+
+```
+[1] 1
+[1] 2
+[1] 3
+```
 
 
 Control Strutures : Next, Break (1/.)
@@ -149,10 +167,39 @@ class: small-code
 **next** is used to skip an iteration of a loop.
 
 
+```r
+sum <- 0
+for(i in 1:100) {
+  if(i <= 20) {
+    next
+  } else {
+    sum = sum + 1
+  }
+}
+sum
+```
 
-**break** is used to exit a loop immediately, regardless of what iteration the loop may be on.
+```
+[1] 80
+```
+
+**break** is used to exit a loop, regardless of what iteration the loop may be on.
 
 
+```r
+sum <- 0
+for(i in 1:100) {
+  sum <- sum + 1
+  if(i > 20) {
+    break
+  }
+}
+sum
+```
+
+```
+[1] 21
+```
 
 
 Functions (1/.)
@@ -263,9 +310,123 @@ g <- f("DIFF"); g(1,2)
 [1] -1
 ```
 
+Arguments matching (1/)
+========================================================
+class: small-code
+
+Calling an R function with arguments can be done in a variety of ways. R functions arguments can be matched **positionally** or **by name**. (Positional matching just means that R assigns the first value to the first argument, the second value to second argument, etc.)
+
+
+```r
+str(rnorm)
+```
+
+```
+function (n, mean = 0, sd = 1)  
+```
+
+```r
+mydata <- rnorm(100,2,1)
+sd(mydata, F)
+```
+
+```
+[1] 0.9578559
+```
+
+```r
+sd(na.rm = FALSE, x = mydata)
+```
+
+```
+[1] 0.9578559
+```
+
+Arguments matching (2/)
+========================================================
+class: small-code
+
+You can mix positional matching with matching by name. When an argument is matched by name, it is “taken out” of the argument list and the remaining unnamed arguments are matched in the order that they are listed in the function definition.
+
+
+```r
+sd(na.rm= F, mydata)
+```
+
+```
+[1] 0.9578559
+```
+
+```r
+args(sd)
+```
+
+```
+function (x, na.rm = FALSE) 
+NULL
+```
+
+I don’t recommend messing around with the order of the arguments too much, since it can lead to some confusion.
+
+Lazy Evaluation
+========================================================
+class: small-code
+
+Arguments to functions are evaluated lazily, so they are evaluated only as needed in the body of the function.
+
+
+```r
+f <- function(a,b) {
+  a^2
+}
+f(45)
+```
+
+```
+[1] 2025
+```
+
+This function never actually uses the argument b, so calling *f(45)* will not produce an error because the 45 gets positionally matched to a. **This behavior can be good or bad**: It’s common to write a function that doesn’t use an argument and not notice it simply because R never throws an error.
+
+The ... Argument
+========================================================
+class: small-code
+
+There is a special argument in R known as the ... argument, which indicate a variable number of arguments that are usually passed on to other functions. The ... argument is often used when extending another function and you don’t want to copy the entire argument list of the original
+function.
+
+
+```r
+myplot <- function(x, y, type= "l", ...) {
+  plot(x, y, type= type, ...)
+}
+```
+
+**Arguments Coming After the ... Argument:** any arguments that appear after ... on the argument list must be named explicitly and cannot be partially matched or matched positionally.
+
+
+```r
+args(paste)
+```
+
+```
+function (..., sep = " ", collapse = NULL) 
+NULL
+```
+
 Summary
 ========================================================
 class: small-code
+
+**Control structures** like **if**, **while**, and **for** allow you to control the flow of an R program:
+* Infinite loops should generally be avoided, even if they are theoretically correct.
+* Control structures mentioned here are primarily useful for writing programs; for commandline interactive work, the “apply” functions are more useful.
+
+**Functions** can be defined using the **function()** directive and are assigned to R objects just like any other R object:
+* It can be defined with named arguments with default values,
+* Its arguments are specified by name or by position in the argument list,
+* It always returns the last expression evaluated in the function body,
+* A variable number of arguments can be specified using the special ... argument in a function definition.
 
 
 Assignement for next week
@@ -273,3 +434,8 @@ Assignement for next week
 class: small-code
 
 
+1. Write a function on your own.
+1. Practice if-else control structure
+1. Practice for control structure
+
+**Next week:** How to get data in and out of R. 

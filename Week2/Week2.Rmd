@@ -1,0 +1,122 @@
+---
+title: "Let's Code - Week 2"
+author: "Adrien ROUX"
+date: "January, 2017"
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an overview of examples that were discussed on Week 2. I try to highlight the use of some expressions related to programming so you get use to it.
+
+## Manipulating **numeric** values
+
+First we store a numeric into a variable named *x*:
+
+```{r}
+x <- 1
+class(x)
+```
+
+Despite the apparances, *x* is not an integer. To instanciate an integer, one would have to use a specific syntaxe.
+
+```{r}
+x <- 1L
+class(x)
+```
+
+Once the variable is *declared* and *instanciated*, one can perform things on it like:
+```{r}
+x + 1L
+```
+
+**NB**: When declaring a variable, you're not explicitly telling to the program that *x* is going to be a numeric. This is infered by the compiler at *runtime*. This behavior is specific to *weakly typed* programming languages.
+
+## Manipulating **vector** variables
+
+We start by creating a sequence of number using the quick syntaxe as follows:
+```{r}
+x <- 1:10
+class(x)
+x
+```
+
+Here is another way.
+
+```{r}
+x <- vector("numeric", length=10)
+x
+```
+
+And another one.
+```{r}
+x <- seq(from= 10, to= 20, length= 10)
+x
+
+y <- seq(from= 10, to= 20, by= 2)
+y
+```
+
+## Manipulating **data.frame**
+
+*Data.frame* structures are a key element in R. They are one of the most encountered structure.
+We here start by creating vector and then store them in a single data.frame.
+
+```{r}
+x1 <- 1:1000
+x2 <- rep("no", 1000) # rep= repeat "no" a 1000 times.
+
+myData <- data.frame(Var1= x1, Var2= x2)
+str(myData)
+
+head(myData,3)
+```
+
+Note how by default the repeated string is implictly converted to a factor variable with a single state "no".
+
+We now insert some missing data on row 3 for the feature or column of the data.frame named *Var1*.
+```{r}
+myData$Var1[3] <- NA
+head(myData,3)
+```
+
+There is other ways to input a specific value in *Var1*.
+```{r}
+myData[1,3] <- NA
+```
+
+Using named *myDate$Var1* is usually the preferred way to proceed.
+
+## Manipulating **matrices**
+
+The difference between matrices and data.frame is that matrices can only store values of the same kind, e.g. numeric. data.frame can store data with different kinds in each columns but are not compatible with algebraic operations.
+
+```{r}
+m <- matrix(1:6, nrow= 3, ncol= 2, byrow = T)
+m
+```
+
+Here are some standard algebraic operations on matrices. 
+**NB**: R leverages what is called **vectorization** to allow faster computation.
+
+```{r}
+m + 1
+```
+
+Some operator may apply element by element. To access the true matrix operator use %*%.
+
+```{r}
+m * m
+```
+
+We make sure that both matrices have the right size.
+
+```{r}
+m %*% t(m)
+```
+
