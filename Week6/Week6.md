@@ -4,7 +4,7 @@
 }
 </style>
 
-Let's Code - Week 5
+Let's Code - Week 6
 ========================================================
 author: Adrien ROUX
 date: January, 2017
