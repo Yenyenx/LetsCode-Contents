@@ -151,12 +151,4 @@ Data are read in using connection interfaces. Connections can be made to files (
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
 
-Github configuration
-========================================================
-In .gitconfig in %USERS%:
-[http]
-	proxy = http://proxy-fr.trading-lb.gdfsuez.net:8080
-[https]
-	proxy = https://proxy-fr.trading-lb.gdfsuez.net:8080
-
 
