@@ -19,30 +19,95 @@ Multiple use cases:
 * data are available through **R repositories** => reference dataset,
 * data is stored in outside world...: classic web or API.
 
+But first of all, let us learn how to manipulate file and folder in R.
 
-Basic file manipulation
+Basic file manipulation (1/)
 ========================================================
 class: small-code
 
 File manipulation in R:
 * **file.create(..., showWarnings = TRUE)** : creates files with the given names if they do not already exist and truncates them if they do. They are created with the maximal read/write permissions.
 
+
+```r
+file.create("HelloWorld.txt", showWarnings = T)
+```
+
+```
+[1] TRUE
+```
+
+```r
+file.create(c("File1.txt", "File2.txt"), showWarnings = T)
+```
+
+```
+[1] TRUE TRUE
+```
+
 * **file.exists(...)** :  returns a logical vector indicating whether the files exist. (Here *exists* is in the sense of the system's stat call: a file will be reported as existing only if you have the permissions needed.)
 
-Note that the existence of a file does not imply that it is readable.
 
-* **file.remove(...)** : attempts to remove the files named in its argument. On Windows, *file* means a regular file and not, say, an empty directory.
+```r
+file.exists("HelloWorld.txt")
+```
+
+```
+[1] TRUE
+```
+
+```r
+file.exists("Blabla.txt")
+```
+
+```
+[1] FALSE
+```
+
+**NB:** the existence of a file does not imply that it is readable.
+
+Basic file manipulation (2/)
+========================================================
+class: small-code
 
 * **file.rename(from, to)** : 
 
-* **file.append(file1, file2)** :
+```r
+file.rename("File1.txt", "File1.csv")
+```
+
+```
+[1] TRUE
+```
+
 * **file.copy(from, to, overwrite = recursive, recursive = FALSE, copy.mode = TRUE, copy.date = FALSE)** :
 
-There is more:
-file.info
-file.access
+```r
+file.copy(from="File2.txt", to="File3.txt")
+```
 
-All these methods are available in base package.
+```
+[1] TRUE
+```
+
+Basic file manipulation (3/)
+========================================================
+class: small-code
+
+* **file.remove(...)** : attempts to remove the files named in its argument. On Windows, *file* means a regular file and not, say, an empty directory.
+
+```r
+file.remove("File3.txt")
+```
+
+```
+[1] TRUE
+```
+
+* **file.info(...)**,
+* **file.access(...)**.
+
+**NB:** All these methods are available in base package.
 
 A first basic example
 ========================================================
