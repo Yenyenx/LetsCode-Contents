@@ -175,6 +175,9 @@ class: small-code
 The readr package is recently developed by Hadley Wickham to deal with reading in large flat
 files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are **read_table()** and **read_csv()**. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.
 
+```{r}
+
+```
 
 
 
@@ -183,15 +186,19 @@ Using Textual and Binary Formats for Storing Data
 ========================================================
 class: small-code
 
+```{r}
+
+```
 
 
 Interfaces to the Outside World
 ========================================================
+class: small-code
+
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
 - file, opens a connection to a file
 - gzfile, opens a connection to a file compressed with gzip
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
-
 

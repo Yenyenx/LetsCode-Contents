@@ -901,6 +901,40 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>A first basic example</h3>
 <div class="slideContent small-code" >
+<pre><code class="r">if(file.create(&quot;BasicExample.txt&quot;)) {
+  fileConn &lt;- file(&quot;BasicExample.txt&quot;)
+  writeLines(&quot;First Basic Example&quot;, fileConn)
+  close(fileConn)  
+}
+
+if(file.exists(&quot;BasicExample.txt&quot;)) {
+  if(!file.copy(&quot;BasicExample.txt&quot;, &quot;BasicExample2.txt&quot;)) {
+    warning(&quot;file not properly copied!&quot;)
+  }
+}
+
+if(file.exists(&quot;BasicExample.txt&quot;) &amp; file.exists(&quot;BasicExample2.txt&quot;)) {
+  if(!file.append(&quot;BasicExample.txt&quot;, &quot;BasicExample2.txt&quot;)){
+    warning(&quot;Appending data to file went wrong!&quot;)
+  }
+}
+
+if(file.exists(&quot;BasicExample.txt&quot;)) {
+  content &lt;- readLines(fileConn &lt;- file(&quot;BasicExample.txt&quot;))
+  print(content)
+  close(fileConn)  
+}
+</code></pre>
+
+<pre><code>[1] &quot;First Basic Example&quot; &quot;First Basic Example&quot; &quot;End of file&quot;        
+</code></pre>
+
+<pre><code class="r">if(file.exists(&quot;BasicExample.txt&quot;)) {
+  if(!file.remove(&quot;BasicExample.txt&quot;)) {
+    warning(&quot;File not properly removed!&quot;)
+  }
+}
+</code></pre>
 
 </div>
 
@@ -911,11 +945,11 @@ hljs.initHighlightingOnLoad();
 <p>folder manipulation:</p>
 
 <ul>
-<li>list.files()</li>
-<li>getwd()</li>
-<li>setwd()</li>
-<li>dir.create()</li>
-<li>dir.exists()</li>
+<li><strong>list.files()</strong>: produce a character vector of the names of files or directories in the named directory.</li>
+<li><strong>getwd()</strong>: returns an absolute filepath representing the current working directory of the R process.</li>
+<li><strong>setwd(</strong>dir<strong>)</strong>: used to set the working directory to <em>dir</em>.</li>
+<li><strong>dir.create(</strong>path<strong>)</strong>: creates a new directory.</li>
+<li><strong>dir.exists(</strong>paths<strong>)</strong>: checks if a list of directories exist.</li>
 </ul>
 
 </div>
@@ -924,13 +958,19 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>A first basic example</h3>
 <div class="slideContent small-code" >
+<pre><code class="r">list.files()
+</code></pre>
 
-</div>
+<pre><code>[1] &quot;BasicExample2.txt&quot; &quot;File1.csv&quot;         &quot;File2.txt&quot;        
+[4] &quot;HelloWorld.txt&quot;    &quot;R google API.txt&quot;  &quot;Test.xls&quot;         
+[7] &quot;Test.xlsx&quot;         &quot;Week6.html&quot;        &quot;Week6.Rpres&quot;      
+</code></pre>
 
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>A more advanced example</h3>
-<div class="slideContent small-code" >
+<pre><code class="r">list.dirs()
+</code></pre>
+
+<pre><code>[1] &quot;.&quot;
+</code></pre>
 
 </div>
 
@@ -955,8 +995,23 @@ hljs.initHighlightingOnLoad();
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Using the readr Package</h3>
+<h3>A first example</h3>
 <div class="slideContent small-code" >
+<pre><code class="r">library(RCurl) #getURL
+url &lt;- &quot;https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&amp;timezone=Europe/Berlin&amp;use_labels_for_header=true&quot;
+x &lt;- getURL(url)
+out &lt;- read.csv(textConnection(x), sep=&quot;;&quot;)
+str(out)
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   1000 obs. of  6 variables:
+ $ Support                    : Factor w/ 22 levels &quot;Bande dessinée jeunesse&quot;,..: 12 18 16 18 16 12 8 12 12 18 ...
+ $ Auteur                     : Factor w/ 375 levels &quot;&quot;,&quot;Abi Rasid, Zinai&quot;,..: 121 328 362 127 208 102 1 131 221 306 ...
+ $ URL.de.la.fiche.de.l.auteur: Factor w/ 624 levels &quot;&quot;,&quot;https://bibliotheques.paris.fr/Default/doc/SYRACUSE/1000013&quot;,..: 36 314 85 301 17 607 1 603 221 321 ...
+ $ Titre                      : Factor w/ 993 levels &quot;10 Cloverfield lane [images animées]&quot;,..: 497 131 172 759 445 960 709 368 913 66 ...
+ $ URL.de.la.fiche.de.l.oeuvre: Factor w/ 1000 levels &quot;http://b14-sigb.apps.paris.mdp/vdp/LinkToVubis.csp?title=Game%20of%20Thrones&amp;Database=1&amp;Profile=Default&amp;NumberToRetrieve=10&quot;,..: 54 577 129 563 30 963 163 957 388 584 ...
+ $ Nombre.de.réservations     : int  1094 668 667 538 502 421 420 369 326 283 ...
+</code></pre>
 
 </div>
 
@@ -964,6 +1019,35 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>Reading data from MS Excel files</h3>
 <div class="slideContent small-code" >
+<pre><code class="r">library(openxlsx)
+df &lt;- read.xlsx(&quot;Test.xlsx&quot;, sheet= 1, startRow= 1, colNames = T)
+str(df)
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   4 obs. of  2 variables:
+ $ Name: chr  &quot;Adrien&quot; &quot;Bob&quot; &quot;Adrien&quot; &quot;Bob&quot;
+ $ Dist: num  10 45 20 42
+</code></pre>
+
+<pre><code class="r">library(readxl)
+df &lt;- read_excel(&quot;Test.xls&quot;, sheet= 1)
+str(df)
+</code></pre>
+
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   4 obs. of  3 variables:
+ $ Name: chr  &quot;Adrien&quot; &quot;Bob&quot; &quot;Adrien&quot; &quot;Bob&quot;
+ $ Dist: num  10 45 20 42
+ $ Unit: chr  &quot;km&quot; &quot;km&quot; &quot;miles&quot; &quot;km&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Using the readr Package</h3>
+<div class="slideContent small-code" >
+<p>The readr package is recently developed by Hadley Wickham to deal with reading in large flat
+files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are <strong>read_table()</strong> and <strong>read_csv()</strong>. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.</p>
 
 </div>
 
@@ -977,7 +1061,7 @@ hljs.initHighlightingOnLoad();
 </section>
 <section data-transition="linear" data-transition-speed="default">
 <h3>Interfaces to the Outside World</h3>
-<div class="slideContent" >
+<div class="slideContent small-code" >
 <p>Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.</p>
 
 <ul>

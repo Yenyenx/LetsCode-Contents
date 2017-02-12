@@ -265,19 +265,22 @@ files quickly. The package provides replacements for functions like read.table()
 
 
 
+
 Using Textual and Binary Formats for Storing Data
 ========================================================
 class: small-code
 
 
 
+
 Interfaces to the Outside World
 ========================================================
+class: small-code
+
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
 - file, opens a connection to a file
 - gzfile, opens a connection to a file compressed with gzip
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
-
 
