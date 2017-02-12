@@ -114,29 +114,77 @@ A first basic example
 class: small-code
 
 
+```r
+if(file.create("BasicExample.txt")) {
+  fileConn <- file("BasicExample.txt")
+  writeLines("First Basic Example", fileConn)
+  close(fileConn)  
+}
+
+if(file.exists("BasicExample.txt")) {
+  if(!file.copy("BasicExample.txt", "BasicExample2.txt")) {
+    warning("file not properly copied!")
+  }
+}
+
+if(file.exists("BasicExample.txt") & file.exists("BasicExample2.txt")) {
+  if(!file.append("BasicExample.txt", "BasicExample2.txt")){
+    warning("Appending data to file went wrong!")
+  }
+}
+
+if(file.exists("BasicExample.txt")) {
+  content <- readLines(fileConn <- file("BasicExample.txt"))
+  print(content)
+  close(fileConn)  
+}
+```
+
+```
+[1] "First Basic Example" "First Basic Example" "End of file"        
+```
+
+```r
+if(file.exists("BasicExample.txt")) {
+  if(!file.remove("BasicExample.txt")) {
+    warning("File not properly removed!")
+  }
+}
+```
 
 Basic folder manipulation
 ========================================================
 class: small-code
 
 folder manipulation:
-* list.files()
-* getwd()
-* setwd()
-* dir.create()
-* dir.exists()
+* **list.files()**: produce a character vector of the names of files or directories in the named directory.
+* **getwd()**: returns an absolute filepath representing the current working directory of the R process.
+* **setwd(**dir**)**: used to set the working directory to *dir*.
+* **dir.create(**path**)**: creates a new directory.
+* **dir.exists(**paths**)**: checks if a list of directories exist.
 
 A first basic example
 ========================================================
 class: small-code
 
 
+```r
+list.files()
+```
 
-A more advanced example
-========================================================
-class: small-code
+```
+[1] "BasicExample2.txt" "File1.csv"         "File2.txt"        
+[4] "HelloWorld.txt"    "R google API.txt"  "Test.xls"         
+[7] "Test.xlsx"         "Week6.html"        "Week6.Rpres"      
+```
 
+```r
+list.dirs()
+```
 
+```
+[1] "."
+```
 
 Reading data into R
 ========================================================
@@ -153,15 +201,67 @@ There are a few principal functions reading data into R:
 
 There are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.
 
-Using the readr Package
+A first example
 ========================================================
 class: small-code
 
 
+```r
+library(RCurl) #getURL
+url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
+x <- getURL(url)
+out <- read.csv(textConnection(x), sep=";")
+str(out)
+```
+
+```
+'data.frame':	1000 obs. of  6 variables:
+ $ Support                    : Factor w/ 22 levels "Bande dessinée jeunesse",..: 12 18 16 18 16 12 8 12 12 18 ...
+ $ Auteur                     : Factor w/ 375 levels "","Abi Rasid, Zinai",..: 121 328 362 127 208 102 1 131 221 306 ...
+ $ URL.de.la.fiche.de.l.auteur: Factor w/ 624 levels "","https://bibliotheques.paris.fr/Default/doc/SYRACUSE/1000013",..: 36 314 85 301 17 607 1 603 221 321 ...
+ $ Titre                      : Factor w/ 993 levels "10 Cloverfield lane [images animées]",..: 497 131 172 759 445 960 709 368 913 66 ...
+ $ URL.de.la.fiche.de.l.oeuvre: Factor w/ 1000 levels "http://b14-sigb.apps.paris.mdp/vdp/LinkToVubis.csp?title=Game%20of%20Thrones&Database=1&Profile=Default&NumberToRetrieve=10",..: 54 577 129 563 30 963 163 957 388 584 ...
+ $ Nombre.de.réservations     : int  1094 668 667 538 502 421 420 369 326 283 ...
+```
 
 Reading data from MS Excel files
 ========================================================
 class: small-code
+
+
+```r
+library(openxlsx)
+df <- read.xlsx("Test.xlsx", sheet= 1, startRow= 1, colNames = T)
+str(df)
+```
+
+```
+'data.frame':	4 obs. of  2 variables:
+ $ Name: chr  "Adrien" "Bob" "Adrien" "Bob"
+ $ Dist: num  10 45 20 42
+```
+
+```r
+library(readxl)
+df <- read_excel("Test.xls", sheet= 1)
+str(df)
+```
+
+```
+Classes 'tbl_df', 'tbl' and 'data.frame':	4 obs. of  3 variables:
+ $ Name: chr  "Adrien" "Bob" "Adrien" "Bob"
+ $ Dist: num  10 45 20 42
+ $ Unit: chr  "km" "km" "miles" "km"
+```
+
+Using the readr Package
+========================================================
+class: small-code
+
+The readr package is recently developed by Hadley Wickham to deal with reading in large flat
+files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are **read_table()** and **read_csv()**. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.
+
+
 
 
 
