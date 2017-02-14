@@ -299,14 +299,14 @@ str(out)
 
 In the next session, we try to make something fun out of such a file...
 
-Summary
+Summary for this week
 ========================================================
 
 Here is what we've learned today.
 ...
 
-**Next session:** practice the stuff reviewed here
-**Upcoming theme:** data visualisation.
+**Next session:** practice the stuff reviewed here.
+**Upcoming theme:** data visualisation: graphs using *ggplot2* and maps using *leaflet*.
 
 Assignement
 ========================================================
