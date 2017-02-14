@@ -142,17 +142,6 @@ There are a few principal functions reading data into R:
 
 There are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.
 
-A first example
-========================================================
-class: small-code
-
-```{r}
-library(RCurl) #getURL
-url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
-x <- getURL(url)
-out <- read.csv(textConnection(x), sep=";")
-str(out)
-```
 
 Reading data from MS Excel files
 ========================================================
@@ -172,23 +161,105 @@ Using the readr Package
 ========================================================
 class: small-code
 
-The readr package is recently developed by Hadley Wickham to deal with reading in large flat
-files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are **read_table()** and **read_csv()**. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.
+The readr package is recently developed by **Hadley Wickham** to deal with reading in large flat files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in *readr* are **read_table()** and **read_csv()**. This functions are oven much faster than their *base* R analogues and provide a few other nice features such as progress meters.
 
 ```{r}
+library(readr)
+args(read_csv)
 
+# n <- 1000000
+# runners <- data.frame(Name= sample(c("Adrien", "Bob", "Janine"), size= n, replace= T),
+#                       Distance= sample(c(10,45,20,70), size= n, replace= T),
+#                       Unit= sample(c("km", "m", "miles"), size= n, replace= T))
+# write.table(runners, file="Runners.csv", col.names = T, row.names =F, sep= ";")
+
+runners <- read_csv2(file = "Runners.csv",
+                     col_names = TRUE,
+                     trim_ws = TRUE)
+
+str(runners)
 ```
 
-
-
-
-Using Textual and Binary Formats for Storing Data
+Using Binary Formats for Storing Data
 ========================================================
 class: small-code
 
-```{r}
+One way to pass data around is by deparsing the R object with **dput()** and reading it back in (parsing it) using **dget()**.
 
+```{r}
+y <- data.frame(a = 1, b = "a")
+dput(y, file="y.R")
+new.y <- dget("y.R")
+new.y
 ```
+
+Multiple objects can be deparsed at once using the dump function and read back in using source.
+
+```{r}
+x <- "foo"
+y <- data.frame(a = 1L, b = "a")
+
+dump(c("x", "y"), file = "data.R")
+```
+
+The inverse of dump() is source()
+
+```{r}
+source("data.R")
+str(y)
+str(x)
+```
+
+Using Binary Formats for Storing Data (1/.)
+========================================================
+class: small-code
+
+The complement to the textual format is the binary format, which is sometimes necessary to use for efficiency purposes, or because there’s just no useful way to represent data in a textual manner. Also, with numeric data, one can often lose precision when converting to and from a textual format, so it’s better to stick with a binary format.
+
+The key functions for converting R objects into a binary format are **save()**, **save.image()**, and **serialize()**. Individual R objects can be saved to a file using the **save()** function.
+
+```{r}
+a <- data.frame(x = rnorm(100), y = runif(100))
+b <- c(3, 4.4, 1 / 3)
+save(a, b, file = "mydata.rda")
+load("mydata.rda")
+```
+
+If you have a lot of objects that you want to save to a file, you can save all objects in your workspace using the save.image() function.
+
+```{r}
+## Save everything to a file
+save.image(file = "mydata.RData")
+
+## load all objects in this file
+load("mydata.RData")
+```
+
+**NB**: Using *.rda* extension when using **save()** and the *.RData* extension when using **save.image()** is not at all mandatory. This is just common practice, since .rda and .RData are fairly common extensions and are recognized by other software.
+
+Using Binary Formats for Storing Data (2/.)
+========================================================
+class: small-code
+
+The **serialize()** function is used to convert individual R objects into a binary format that can be communicated across an arbitrary connection. This may get sent to a file, but it could get sent over a network or other connection.
+
+When you call serialize() on an R object, the output will be a raw vector coded in hexadecimal format.
+
+```{r}
+x <- list(1,2,3)
+serialize(x, NULL)
+
+con <- file("serial_x.txt", "w")
+serialize(x,con)
+close(con)
+
+con <- file("serial_x.txt", "r")
+x.new <- unserialize(con)
+close(con)
+x.new
+```
+
+If you want, this can be sent to a file, but in that case you are better off using something like save(). The benefit of the serialize() function is that it is the only way to perfectly represent an R object in an exportable format, without losing precision or any metadata.
 
 
 Interfaces to the Outside World
@@ -197,8 +268,39 @@ class: small-code
 
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
-- file, opens a connection to a file
+- file, opens a connection to a file (Already done above...)
 - gzfile, opens a connection to a file compressed with gzip
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
+
+A first example with an URL
+========================================================
+class: small-code
+
+```{r}
+library(RCurl) #getURL
+url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
+x <- getURL(url)
+out <- read.csv(textConnection(x), sep=";")
+str(out)
+```
+
+A second example with Mercure REST API
+========================================================
+class: small-code
+
+
+Summary
+========================================================
+
+Here is what we've learned today.
+
+
+Assignement
+========================================================
+
+Do something with :
+* either csv file,
+* or an URL connection,
+* or even better combine both...
 

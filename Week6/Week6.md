@@ -173,9 +173,11 @@ list.files()
 ```
 
 ```
-[1] "BasicExample2.txt" "File1.csv"         "File2.txt"        
-[4] "HelloWorld.txt"    "R google API.txt"  "Test.xls"         
-[7] "Test.xlsx"         "Week6.html"        "Week6.Rpres"      
+ [1] "BasicExample2.txt" "data.R"            "File1.csv"        
+ [4] "File2.txt"         "HelloWorld.txt"    "mydata.rda"       
+ [7] "mydata.RData"      "Runners.csv"       "serial_x.txt"     
+[10] "Test.xls"          "Test.xlsx"         "Week6.html"       
+[13] "Week6.Rpres"       "y.R"              
 ```
 
 ```r
@@ -201,28 +203,6 @@ There are a few principal functions reading data into R:
 
 There are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.
 
-A first example
-========================================================
-class: small-code
-
-
-```r
-library(RCurl) #getURL
-url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
-x <- getURL(url)
-out <- read.csv(textConnection(x), sep=";")
-str(out)
-```
-
-```
-'data.frame':	1000 obs. of  6 variables:
- $ Support                    : Factor w/ 22 levels "Bande dessinÃ©e jeunesse",..: 12 18 16 18 16 12 8 12 12 18 ...
- $ Auteur                     : Factor w/ 375 levels "","Abi Rasid, Zinai",..: 121 328 362 127 208 102 1 131 221 306 ...
- $ URL.de.la.fiche.de.l.auteur: Factor w/ 624 levels "","https://bibliotheques.paris.fr/Default/doc/SYRACUSE/1000013",..: 36 314 85 301 17 607 1 603 221 321 ...
- $ Titre                      : Factor w/ 993 levels "10 Cloverfield lane [images animÃ©es]",..: 497 131 172 759 445 960 709 368 913 66 ...
- $ URL.de.la.fiche.de.l.oeuvre: Factor w/ 1000 levels "http://b14-sigb.apps.paris.mdp/vdp/LinkToVubis.csp?title=Game%20of%20Thrones&Database=1&Profile=Default&NumberToRetrieve=10",..: 54 577 129 563 30 963 163 957 388 584 ...
- $ Nombre.de.rÃ©servations     : int  1094 668 667 538 502 421 420 369 326 283 ...
-```
 
 Reading data from MS Excel files
 ========================================================
@@ -258,19 +238,184 @@ Using the readr Package
 ========================================================
 class: small-code
 
-The readr package is recently developed by Hadley Wickham to deal with reading in large flat
-files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are **read_table()** and **read_csv()**. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.
+The readr package is recently developed by **Hadley Wickham** to deal with reading in large flat files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in *readr* are **read_table()** and **read_csv()**. This functions are oven much faster than their *base* R analogues and provide a few other nice features such as progress meters.
 
 
+```r
+library(readr)
+args(read_csv)
+```
 
+```
+function (file, col_names = TRUE, col_types = NULL, locale = default_locale(), 
+    na = c("", "NA"), quoted_na = TRUE, comment = "", trim_ws = TRUE, 
+    skip = 0, n_max = Inf, guess_max = min(1000, n_max), progress = interactive()) 
+NULL
+```
 
+```r
+# n <- 1000000
+# runners <- data.frame(Name= sample(c("Adrien", "Bob", "Janine"), size= n, replace= T),
+#                       Distance= sample(c(10,45,20,70), size= n, replace= T),
+#                       Unit= sample(c("km", "m", "miles"), size= n, replace= T))
+# write.table(runners, file="Runners.csv", col.names = T, row.names =F, sep= ";")
 
+runners <- read_csv2(file = "Runners.csv",
+                     col_names = TRUE,
+                     trim_ws = TRUE)
 
-Using Textual and Binary Formats for Storing Data
+str(runners)
+```
+
+```
+Classes 'tbl_df', 'tbl' and 'data.frame':	1000000 obs. of  3 variables:
+ $ Name    : chr  "Janine" "Janine" "Adrien" "Janine" ...
+ $ Distance: int  20 70 10 45 70 10 70 10 20 45 ...
+ $ Unit    : chr  "km" "m" "miles" "miles" ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 3
+  .. ..$ Name    : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Distance: list()
+  .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+  .. ..$ Unit    : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
+```
+
+Using Binary Formats for Storing Data
 ========================================================
 class: small-code
 
+One way to pass data around is by deparsing the R object with **dput()** and reading it back in (parsing it) using **dget()**.
 
+
+```r
+y <- data.frame(a = 1, b = "a")
+dput(y, file="y.R")
+new.y <- dget("y.R")
+new.y
+```
+
+```
+  a b
+1 1 a
+```
+
+Multiple objects can be deparsed at once using the dump function and read back in using source.
+
+
+```r
+x <- "foo"
+y <- data.frame(a = 1L, b = "a")
+
+dump(c("x", "y"), file = "data.R")
+```
+
+The inverse of dump() is source()
+
+
+```r
+source("data.R")
+str(y)
+```
+
+```
+'data.frame':	1 obs. of  2 variables:
+ $ a: int 1
+ $ b: Factor w/ 1 level "a": 1
+```
+
+```r
+str(x)
+```
+
+```
+ chr "foo"
+```
+
+Using Binary Formats for Storing Data (1/.)
+========================================================
+class: small-code
+
+The complement to the textual format is the binary format, which is sometimes necessary to use for efficiency purposes, or because there’s just no useful way to represent data in a textual manner. Also, with numeric data, one can often lose precision when converting to and from a textual format, so it’s better to stick with a binary format.
+
+The key functions for converting R objects into a binary format are **save()**, **save.image()**, and **serialize()**. Individual R objects can be saved to a file using the **save()** function.
+
+
+```r
+a <- data.frame(x = rnorm(100), y = runif(100))
+b <- c(3, 4.4, 1 / 3)
+save(a, b, file = "mydata.rda")
+load("mydata.rda")
+```
+
+If you have a lot of objects that you want to save to a file, you can save all objects in your workspace using the save.image() function.
+
+
+```r
+## Save everything to a file
+save.image(file = "mydata.RData")
+
+## load all objects in this file
+load("mydata.RData")
+```
+
+**NB**: Using *.rda* extension when using **save()** and the *.RData* extension when using **save.image()** is not at all mandatory. This is just common practice, since .rda and .RData are fairly common extensions and are recognized by other software.
+
+Using Binary Formats for Storing Data (2/.)
+========================================================
+class: small-code
+
+The **serialize()** function is used to convert individual R objects into a binary format that can be communicated across an arbitrary connection. This may get sent to a file, but it could get sent over a network or other connection.
+
+When you call serialize() on an R object, the output will be a raw vector coded in hexadecimal format.
+
+
+```r
+x <- list(1,2,3)
+serialize(x, NULL)
+```
+
+```
+ [1] 58 0a 00 00 00 02 00 03 03 02 00 02 03 00 00 00 00 13 00 00 00 03 00
+[24] 00 00 0e 00 00 00 01 3f f0 00 00 00 00 00 00 00 00 00 0e 00 00 00 01
+[47] 40 00 00 00 00 00 00 00 00 00 00 0e 00 00 00 01 40 08 00 00 00 00 00
+[70] 00
+```
+
+```r
+con <- file("serial_x.txt", "w")
+serialize(x,con)
+```
+
+```
+NULL
+```
+
+```r
+close(con)
+
+con <- file("serial_x.txt", "r")
+x.new <- unserialize(con)
+close(con)
+x.new
+```
+
+```
+[[1]]
+[1] 1
+
+[[2]]
+[1] 2
+
+[[3]]
+[1] 3
+```
+
+If you want, this can be sent to a file, but in that case you are better off using something like save(). The benefit of the serialize() function is that it is the only way to perfectly represent an R object in an exportable format, without losing precision or any metadata.
 
 
 Interfaces to the Outside World
@@ -279,8 +424,19 @@ class: small-code
 
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
-- file, opens a connection to a file
+- file, opens a connection to a file (Already done above...)
 - gzfile, opens a connection to a file compressed with gzip
 - bzfile, opens a connection to a file compressed with bzip2
 - url, opens a connection to a webpage
 
+A first example with an URL
+========================================================
+class: small-code
+
+
+
+
+```
+Error in function (type, msg, asError = TRUE)  : 
+  Could not resolve host: opendata.paris.fr
+```
