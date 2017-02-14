@@ -278,23 +278,35 @@ A first example with an URL
 class: small-code
 
 ```{r}
-library(RCurl) #getURL
-url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
-x <- getURL(url)
-out <- read.csv(textConnection(x), sep=";")
-str(out)
+con <- url("http://www.jhsph.edu", "r")
+x <- readLines(con = con)
+head(x)
 ```
 
-A second example with Mercure REST API
+A second example using RCurl
 ========================================================
 class: small-code
 
+First have a look at <https://opendata.paris.fr/>. 
+
+```{r}
+library(RCurl) #getURL
+url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
+x <- getURL(url)
+out <- read_csv(textConnection(x), col_names = T)
+str(out)
+```
+
+In the next session, we try to make something fun out of such a file...
 
 Summary
 ========================================================
 
 Here is what we've learned today.
+...
 
+**Next session:** practice the stuff reviewed here
+**Upcoming theme:** data visualisation.
 
 Assignement
 ========================================================

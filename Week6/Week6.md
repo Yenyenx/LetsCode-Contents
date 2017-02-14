@@ -436,7 +436,8 @@ class: small-code
 
 
 
+
+
 ```
-Error in function (type, msg, asError = TRUE)  : 
-  Could not resolve host: opendata.paris.fr
+Error in url("http://www.jhsph.edu", "r") : cannot open the connection
 ```
