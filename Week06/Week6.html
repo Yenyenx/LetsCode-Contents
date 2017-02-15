@@ -794,15 +794,17 @@ hljs.initHighlightingOnLoad();
 <section data-transition="linear" data-transition-speed="default">
 <h3>Getting Data In and Out of R</h3>
 <div class="slideContent small-code" >
+<p>Getting data in and out of your program is really soemthing common. The inverse, i.e. coding a program with no data getting either in or out, is nowadays pretty rare&hellip; unless some very specific stuff like mathematical algorithm&hellip;</p>
+
 <p>Multiple use cases:</p>
 
 <ul>
 <li>data are available <strong>on your computer locally</strong> or through <strong>local network</strong>,</li>
 <li>data are available through <strong>R repositories</strong> =&gt; reference dataset,</li>
-<li>data is stored in outside world&hellip;: classic web or API.</li>
+<li>data is stored in outside world&hellip;: classic web or API or&hellip;</li>
 </ul>
 
-<p>But first of all, let us learn how to manipulate file and folder in R.</p>
+<p>But first of all, let us learn how to manipulate a single file or a folder using R.</p>
 
 </div>
 
@@ -813,7 +815,7 @@ hljs.initHighlightingOnLoad();
 <p>File manipulation in R:</p>
 
 <ul>
-<li><strong>file.create(&hellip;, showWarnings = TRUE)</strong> : creates files with the given names if they do not already exist and truncates them if they do. They are created with the maximal read/write permissions.</li>
+<li><strong>file.create</strong>(&hellip;, showWarnings = TRUE) : creates files with the given names if they do not already exist and truncates them if they do. They are created with the maximal read/write permissions.</li>
 </ul>
 
 <pre><code class="r">file.create(&quot;HelloWorld.txt&quot;, showWarnings = T)
@@ -829,7 +831,7 @@ hljs.initHighlightingOnLoad();
 </code></pre>
 
 <ul>
-<li><strong>file.exists(&hellip;)</strong> :  returns a logical vector indicating whether the files exist. (Here <em>exists</em> is in the sense of the system&#39;s stat call: a file will be reported as existing only if you have the permissions needed.)</li>
+<li><strong>file.exists</strong>(&hellip;) :  returns a logical vector indicating whether the files exist. (Here <em>exists</em> is in the sense of the system&#39;s stat call: a file will be reported as existing only if you have the permissions needed.)</li>
 </ul>
 
 <pre><code class="r">file.exists(&quot;HelloWorld.txt&quot;)
@@ -853,7 +855,7 @@ hljs.initHighlightingOnLoad();
 <h3>Basic file manipulation (2&#x2F;)</h3>
 <div class="slideContent small-code" >
 <ul>
-<li><strong>file.rename(from, to)</strong> : </li>
+<li><strong>file.rename</strong>(from, to) : </li>
 </ul>
 
 <pre><code class="r">file.rename(&quot;File1.txt&quot;, &quot;File1.csv&quot;)
@@ -863,7 +865,7 @@ hljs.initHighlightingOnLoad();
 </code></pre>
 
 <ul>
-<li><strong>file.copy(from, to, overwrite = recursive, recursive = FALSE, copy.mode = TRUE, copy.date = FALSE)</strong> :</li>
+<li><strong>file.copy</strong>(from, to, overwrite = recursive, recursive = FALSE, copy.mode = TRUE, copy.date = FALSE) :</li>
 </ul>
 
 <pre><code class="r">file.copy(from=&quot;File2.txt&quot;, to=&quot;File3.txt&quot;)
@@ -879,7 +881,7 @@ hljs.initHighlightingOnLoad();
 <h3>Basic file manipulation (3&#x2F;)</h3>
 <div class="slideContent small-code" >
 <ul>
-<li><strong>file.remove(&hellip;)</strong> : attempts to remove the files named in its argument. On Windows, <em>file</em> means a regular file and not, say, an empty directory.</li>
+<li><strong>file.remove</strong>(&hellip;) : attempts to remove the files named in its argument. On Windows, <em>file</em> means a regular file and not, say, an empty directory.</li>
 </ul>
 
 <pre><code class="r">file.remove(&quot;File3.txt&quot;)
@@ -961,9 +963,11 @@ if(file.exists(&quot;BasicExample.txt&quot;)) {
 <pre><code class="r">list.files()
 </code></pre>
 
-<pre><code>[1] &quot;BasicExample2.txt&quot; &quot;File1.csv&quot;         &quot;File2.txt&quot;        
-[4] &quot;HelloWorld.txt&quot;    &quot;R google API.txt&quot;  &quot;Test.xls&quot;         
-[7] &quot;Test.xlsx&quot;         &quot;Week6.html&quot;        &quot;Week6.Rpres&quot;      
+<pre><code> [1] &quot;BasicExample2.txt&quot; &quot;data.R&quot;            &quot;File1.csv&quot;        
+ [4] &quot;File2.txt&quot;         &quot;HelloWorld.txt&quot;    &quot;mydata.rda&quot;       
+ [7] &quot;mydata.RData&quot;      &quot;Runners.csv&quot;       &quot;serial_x.txt&quot;     
+[10] &quot;Test.xls&quot;          &quot;Test.xlsx&quot;         &quot;Week6.html&quot;       
+[13] &quot;Week6.Rpres&quot;       &quot;y.R&quot;              
 </code></pre>
 
 <pre><code class="r">list.dirs()
@@ -989,29 +993,7 @@ if(file.exists(&quot;BasicExample.txt&quot;)) {
 <li><strong>unserialize</strong>, for reading single R objects in binary form.</li>
 </ul>
 
-<p>There are of course, many R packages that have been developed to read in all kinds of other datasets, and you may need to resort to one of these packages if you are working in a specific area.</p>
-
-</div>
-
-</section>
-<section data-transition="linear" data-transition-speed="default">
-<h3>A first example</h3>
-<div class="slideContent small-code" >
-<pre><code class="r">library(RCurl) #getURL
-url &lt;- &quot;https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&amp;timezone=Europe/Berlin&amp;use_labels_for_header=true&quot;
-x &lt;- getURL(url)
-out &lt;- read.csv(textConnection(x), sep=&quot;;&quot;)
-str(out)
-</code></pre>
-
-<pre><code>&#39;data.frame&#39;:   1000 obs. of  6 variables:
- $ Support                    : Factor w/ 22 levels &quot;Bande dessinée jeunesse&quot;,..: 12 18 16 18 16 12 8 12 12 18 ...
- $ Auteur                     : Factor w/ 375 levels &quot;&quot;,&quot;Abi Rasid, Zinai&quot;,..: 121 328 362 127 208 102 1 131 221 306 ...
- $ URL.de.la.fiche.de.l.auteur: Factor w/ 624 levels &quot;&quot;,&quot;https://bibliotheques.paris.fr/Default/doc/SYRACUSE/1000013&quot;,..: 36 314 85 301 17 607 1 603 221 321 ...
- $ Titre                      : Factor w/ 993 levels &quot;10 Cloverfield lane [images animées]&quot;,..: 497 131 172 759 445 960 709 368 913 66 ...
- $ URL.de.la.fiche.de.l.oeuvre: Factor w/ 1000 levels &quot;http://b14-sigb.apps.paris.mdp/vdp/LinkToVubis.csp?title=Game%20of%20Thrones&amp;Database=1&amp;Profile=Default&amp;NumberToRetrieve=10&quot;,..: 54 577 129 563 30 963 163 957 388 584 ...
- $ Nombre.de.réservations     : int  1094 668 667 538 502 421 420 369 326 283 ...
-</code></pre>
+<p>There are of course, many R packages to read in all kinds of other datasets, and you may need to resort to one of these if you are working in a specific area.</p>
 
 </div>
 
@@ -1046,15 +1028,153 @@ str(df)
 <section data-transition="linear" data-transition-speed="default">
 <h3>Using the readr Package</h3>
 <div class="slideContent small-code" >
-<p>The readr package is recently developed by Hadley Wickham to deal with reading in large flat
-files quickly. The package provides replacements for functions like read.table() and read.csv(). The analogous functions in readr are <strong>read_table()</strong> and <strong>read_csv()</strong>. This functions are oven much faster than their base R analogues and provide a few other nice features such as progress meters.</p>
+<p>The readr package is developed by <strong>Hadley Wickham</strong> to deal with reading in large flat files. It provides replacements for functions like read.table() and read.csv(). The analogous functions in <em>readr</em> are <strong>read_table()</strong> and <strong>read_csv()</strong>. These are oven much faster than their <em>base</em> R analogues and provide a few other nice features.</p>
+
+<pre><code class="r">library(readr)
+runners &lt;- read_csv2(file = &quot;Runners.csv&quot;,
+                     col_names = TRUE,
+                     trim_ws = TRUE)
+str(runners)
+</code></pre>
+
+<pre><code>Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   1000000 obs. of  3 variables:
+ $ Name    : chr  &quot;Janine&quot; &quot;Janine&quot; &quot;Adrien&quot; &quot;Janine&quot; ...
+ $ Distance: int  20 70 10 45 70 10 70 10 20 45 ...
+ $ Unit    : chr  &quot;km&quot; &quot;m&quot; &quot;miles&quot; &quot;miles&quot; ...
+ - attr(*, &quot;spec&quot;)=List of 2
+  ..$ cols   :List of 3
+  .. ..$ Name    : list()
+  .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+  .. ..$ Distance: list()
+  .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+  .. ..$ Unit    : list()
+  .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+  ..$ default: list()
+  .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_guess&quot; &quot;collector&quot;
+  ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+</code></pre>
 
 </div>
 
 </section>
 <section data-transition="linear" data-transition-speed="default">
-<h3>Using Textual and Binary Formats for Storing Data</h3>
+<h3>Using Binary Formats for Storing Data</h3>
 <div class="slideContent small-code" >
+<p>One way to pass data around is by deparsing the R object with <strong>dput()</strong> and reading it back in (parsing it) using <strong>dget()</strong>.</p>
+
+<pre><code class="r">y &lt;- data.frame(a = 1, b = &quot;a&quot;)
+dput(y, file=&quot;y.R&quot;)
+new.y &lt;- dget(&quot;y.R&quot;)
+new.y
+</code></pre>
+
+<pre><code>  a b
+1 1 a
+</code></pre>
+
+<p>Multiple objects are <em>deparsed</em> at once using <strong>dump</strong> and read back in using <strong>source</strong>.</p>
+
+<pre><code class="r">x &lt;- &quot;foo&quot;
+y &lt;- data.frame(a = 1L, b = &quot;a&quot;)
+
+dump(c(&quot;x&quot;, &quot;y&quot;), file = &quot;data.R&quot;)
+
+source(&quot;data.R&quot;)
+str(y)
+</code></pre>
+
+<pre><code>&#39;data.frame&#39;:   1 obs. of  2 variables:
+ $ a: int 1
+ $ b: Factor w/ 1 level &quot;a&quot;: 1
+</code></pre>
+
+<pre><code class="r">str(x)
+</code></pre>
+
+<pre><code> chr &quot;foo&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Using Binary Formats for Storing Data (1&#x2F;.)</h3>
+<div class="slideContent small-code" >
+<p>The complement to <strong>textual</strong> format is <strong>binary</strong> format, which is sometimes necessary to use for efficiency purposes, or because there’s just no useful way to represent data in a textual manner. </p>
+
+<p>With numeric data, one can <em>often</em> lose precision when converting to and from a textual format, so it’s better to stick with a binary format.</p>
+
+<p>The key functions for converting R objects into a binary format are <strong>save()</strong>, <strong>save.image()</strong>, and <strong>serialize()</strong>. Individual R objects can be saved to a file using the <strong>save()</strong> function.</p>
+
+<pre><code class="r">a &lt;- data.frame(x = rnorm(100), y = runif(100))
+b &lt;- c(3, 4.4, 1 / 3)
+save(a, b, file = &quot;mydata.rda&quot;)
+load(&quot;mydata.rda&quot;)
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Using Binary Formats for Storing Data (2&#x2F;.)</h3>
+<div class="slideContent small-code" >
+<p>If you have a lot of objects that you want to save to a file, you can save all objects in your workspace using the save.image() function.</p>
+
+<pre><code class="r">## Save everything to a file
+save.image(file = &quot;mydata.RData&quot;)
+
+## load all objects in this file
+load(&quot;mydata.RData&quot;)
+</code></pre>
+
+<p><strong>NB</strong>: Using <em>.rda</em> extension when using <strong>save()</strong> and the <em>.RData</em> extension when using <strong>save.image()</strong> is not at all mandatory. This is just common practice, since .rda and .RData are fairly common extensions and are recognized by other software.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Using Binary Formats for Storing Data (3&#x2F;.)</h3>
+<div class="slideContent small-code" >
+<p>The <strong>serialize()</strong> function is used to convert individual R objects into a binary format that can be communicated across an arbitrary connection. This may get sent to a file, but it could get sent over a network or other connection.</p>
+
+<p>The output of <strong>serialize</strong> will be a raw vector coded in hexadecimal format.</p>
+
+<pre><code class="r">x &lt;- list(1,2,3)
+serialize(x, NULL)
+</code></pre>
+
+<pre><code> [1] 58 0a 00 00 00 02 00 03 03 02 00 02 03 00 00 00 00 13 00 00 00 03 00
+[24] 00 00 0e 00 00 00 01 3f f0 00 00 00 00 00 00 00 00 00 0e 00 00 00 01
+[47] 40 00 00 00 00 00 00 00 00 00 00 0e 00 00 00 01 40 08 00 00 00 00 00
+[70] 00
+</code></pre>
+
+<pre><code class="r">con &lt;- file(&quot;serial_x.txt&quot;, &quot;w&quot;)
+serialize(x,con)
+</code></pre>
+
+<pre><code>NULL
+</code></pre>
+
+<pre><code class="r">close(con)
+
+con &lt;- file(&quot;serial_x.txt&quot;, &quot;r&quot;)
+x.new &lt;- unserialize(con)
+close(con)
+x.new
+</code></pre>
+
+<pre><code>[[1]]
+[1] 1
+
+[[2]]
+[1] 2
+
+[[3]]
+[1] 3
+</code></pre>
+
+<p>This can be sent to a file, but in that case you are better off using something like <strong>save()</strong>. The benefit of the serialize() function is that it is the only way to perfectly represent an R object in an exportable format, without losing precision or any metadata.</p>
 
 </div>
 
@@ -1065,10 +1185,64 @@ files quickly. The package provides replacements for functions like read.table()
 <p>Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.</p>
 
 <ul>
-<li>file, opens a connection to a file</li>
+<li>file, opens a connection to a file (Already done above&hellip;)</li>
 <li>gzfile, opens a connection to a file compressed with gzip</li>
 <li>bzfile, opens a connection to a file compressed with bzip2</li>
 <li>url, opens a connection to a webpage</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>A first example with an URL</h3>
+<div class="slideContent small-code" >
+<pre><code class="r"># con &lt;- url(&quot;http://www.jhsph.edu&quot;, &quot;r&quot;)
+# x &lt;- readLines(con = con)
+# head(x)
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>A second example using RCurl</h3>
+<div class="slideContent small-code" >
+<p>First have a look at <a href="https://opendata.paris.fr/">https://opendata.paris.fr/</a>. </p>
+
+<pre><code class="r">library(RCurl) #getURL
+# url &lt;- &quot;https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&amp;timezone=Europe/Berlin&amp;use_labels_for_header=true&quot;
+# x &lt;- getURL(url)
+# out &lt;- read_csv(textConnection(x), col_names = T)
+# str(out)
+</code></pre>
+
+<p>In the next session, we try to make something fun out of such a file&hellip;</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Summary for this week</h3>
+<div class="slideContent" >
+<p>Here is what we&#39;ve learned today.
+&hellip;</p>
+
+<p><strong>Next session:</strong> practice the stuff reviewed here.
+<strong>Upcoming theme:</strong> data visualisation: graphs using <em>ggplot2</em> and maps using <em>leaflet</em>.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Assignement</h3>
+<div class="slideContent" >
+<p>Do something with :</p>
+
+<ul>
+<li>either csv file,</li>
+<li>or an URL connection,</li>
+<li>or even better combine both&hellip;</li>
 </ul>
 
 </div>
