@@ -273,43 +273,68 @@ class: small-code
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
 - file, opens a connection to a file (Already done above...)
-- gzfile, opens a connection to a file compressed with gzip
-- bzfile, opens a connection to a file compressed with bzip2
-- url, opens a connection to a webpage
+- gzfile, opens a connection to a file compressed with gzip (kind of an extension of file)
+- bzfile, opens a connection to a file compressed with bzip2 (kind of an extension of file)
+- url, opens a connection to a webpage.
 
 A first example with an URL
 ========================================================
 class: small-code
 
 ```{r}
-# con <- url("http://www.jhsph.edu", "r")
-# x <- readLines(con = con)
-# head(x)
-```
+con <- url("http://www.jhsph.edu", "r")
+x <- readLines(con = con)
+head(x)
 
-A second example using RCurl
+con <- url("http://fr.wikipedia.org/wiki/Paris")
+x <- readLines(con = con)
+head(x,12)
+```
+Try F12 using Chrome to see the content of the html file directly within your web browser.
+
+
+A second example using RCurl (1/.)
 ========================================================
 class: small-code
 
-First have a look at <https://opendata.paris.fr/>. 
+First have a look at <https://opendata.paris.fr/>. It's a website dedicated to data related to the city Paris. These data are accessible through many ways. One of them is uploading a csv file. 
+
+**We here automate the task of uploading a specific file from the website and transforming it into a data.frame for further use in our own specific program**.
+
+A second example using RCurl (2/.)
+========================================================
+class: small-code
 
 ```{r}
 library(RCurl) #getURL
-# url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
-# x <- getURL(url)
-# out <- read_csv(textConnection(x), col_names = T)
-# str(out)
+
+url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
+
+x <- getURL(url, ssl.verifypeer = FALSE)
+# ssl.verifypeer is a technical feature. Do not pay to much attention to it.
+out <- read.csv2(textConnection(x), stringsAsFactors = F)
+
+names(out)
+head(out$Titre)
 ```
+
+
 
 In the next session, we try to make something fun out of such a file...
 
 Summary for this week
 ========================================================
 
-Here is what we've learned today.
-...
+Here is what we've learned today:
+
+* file manipulation,
+* folder/directory manipulation,
+* first steps to read/write data from local data source,
+* first steps with url and csv loading from the web.
+
 
 **Next session:** practice the stuff reviewed here.
+
 **Upcoming theme:** data visualisation: graphs using *ggplot2* and maps using *leaflet*.
 
 Assignement
@@ -317,6 +342,8 @@ Assignement
 
 Do something with :
 * either csv file,
+* or file manipulation,
 * or an URL connection,
 * or even better combine both...
 
+and submit it to the others on your github fork or per mail.
