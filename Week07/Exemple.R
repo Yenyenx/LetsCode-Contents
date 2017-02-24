@@ -1,3 +1,4 @@
 # Exemple Week7
 
-x <- 2
+# Add some contents to test GitHub behavior discussed this afternoon.
+
