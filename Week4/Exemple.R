@@ -74,5 +74,3 @@ data$Price <- data$Price + rnorm(1000, mean=0, sd= 10)
 
 str(data)
 head(data)
-
-x <- 2
