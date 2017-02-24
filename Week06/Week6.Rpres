@@ -23,7 +23,7 @@ Multiple use cases:
 
 But first of all, let us learn how to manipulate a single file or a folder using R.
 
-Basic file manipulation (1/)
+Basic file manipulation (1/3)
 ========================================================
 class: small-code
 
@@ -44,7 +44,7 @@ file.exists("Blabla.txt")
 
 **NB:** the existence of a file does not imply that it is readable.
 
-Basic file manipulation (2/)
+Basic file manipulation (2/3)
 ========================================================
 class: small-code
 
@@ -58,7 +58,7 @@ file.rename("File1.txt", "File1.csv")
 file.copy(from="File2.txt", to="File3.txt")
 ```
 
-Basic file manipulation (3/)
+Basic file manipulation (3/3)
 ========================================================
 class: small-code
 
@@ -182,7 +182,7 @@ runners <- read_csv2(file = "Runners.csv",
 str(runners)
 ```
 
-Using Binary Formats for Storing Data
+Using Binary Formats for Storing Data (1/4)
 ========================================================
 class: small-code
 
@@ -208,13 +208,13 @@ str(y)
 str(x)
 ```
 
-Using Binary Formats for Storing Data (1/.)
+Using Binary Formats for Storing Data (2/4)
 ========================================================
 class: small-code
 
-The complement to **textual** format is **binary** format, which is sometimes necessary to use for efficiency purposes, or because there’s just no useful way to represent data in a textual manner. 
+The complement to **textual** format is **binary** format, which is sometimes necessary to use for efficiency purposes, or because there s just no useful way to represent data in a textual manner. 
 
-With numeric data, one can *often* lose precision when converting to and from a textual format, so it’s better to stick with a binary format.
+With numeric data, one can *often* lose precision when converting to and from a textual format, so it s better to stick with a binary format.
 
 The key functions for converting R objects into a binary format are **save()**, **save.image()**, and **serialize()**. Individual R objects can be saved to a file using the **save()** function.
 
@@ -225,7 +225,7 @@ save(a, b, file = "mydata.rda")
 load("mydata.rda")
 ```
 
-Using Binary Formats for Storing Data (2/.)
+Using Binary Formats for Storing Data (3/4)
 ========================================================
 class: small-code
 
@@ -241,7 +241,7 @@ load("mydata.RData")
 
 **NB**: Using *.rda* extension when using **save()** and the *.RData* extension when using **save.image()** is not at all mandatory. This is just common practice, since .rda and .RData are fairly common extensions and are recognized by other software.
 
-Using Binary Formats for Storing Data (3/.)
+Using Binary Formats for Storing Data (4/4)
 ========================================================
 class: small-code
 
@@ -273,43 +273,78 @@ class: small-code
 Data are read in using connection interfaces. Connections can be made to files (most common) or to other more exotic things.
 
 - file, opens a connection to a file (Already done above...)
-- gzfile, opens a connection to a file compressed with gzip
-- bzfile, opens a connection to a file compressed with bzip2
-- url, opens a connection to a webpage
+- gzfile, opens a connection to a file compressed with gzip (kind of an extension of file)
+- bzfile, opens a connection to a file compressed with bzip2 (kind of an extension of file)
+- url, opens a connection to a webpage.
 
 A first example with an URL
 ========================================================
 class: small-code
 
 ```{r}
-# con <- url("http://www.jhsph.edu", "r")
-# x <- readLines(con = con)
-# head(x)
-```
+con <- url("http://www.jhsph.edu", "r")
+x <- readLines(con = con)
+head(x)
 
-A second example using RCurl
+con <- url("http://fr.wikipedia.org/wiki/Paris")
+x <- readLines(con = con)
+head(x,12)
+```
+Try F12 using Chrome to see the content of the html file directly within your web browser.
+
+
+A second example using RCurl (1/2)
 ========================================================
 class: small-code
 
-First have a look at <https://opendata.paris.fr/>. 
+First have a look at <https://opendata.paris.fr/>. It's a website dedicated to data related to the city Paris. These data are accessible through many ways. One of them is uploading a csv file. 
+
+**We here automate the task of uploading a specific file from the website and transforming it into a data.frame for further use in our own specific program**.
+
+A second example using RCurl (2/2)
+========================================================
+class: small-code
 
 ```{r}
 library(RCurl) #getURL
-# url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
-# x <- getURL(url)
-# out <- read_csv(textConnection(x), col_names = T)
-# str(out)
+# options(RCurlOptions = list(proxy = "http://%YOUR%PROXY%GOES%HERE%", 
+#                             proxyport = 8080))
+# # The true proxy used in the code in hidden.
 ```
+
+```{r}
+url <- "https://opendata.paris.fr/explore/dataset/les-1000-titres-les-plus-reserves-dans-les-bibliotheques-de-pret/download/?format=csv&timezone=Europe/Berlin&use_labels_for_header=true"
+
+x <- getURL(url, ssl.verifypeer = FALSE)
+# ssl.verifypeer is a technical feature. Do not pay to much attention to it.
+# It's linked to the SSL certificat
+out <- read.csv2(textConnection(x), stringsAsFactors = F)
+
+names(out)
+head(out$Titre)
+```
+
+
+
+
+
+
 
 In the next session, we try to make something fun out of such a file...
 
 Summary for this week
 ========================================================
 
-Here is what we've learned today.
-...
+Here is what we've learned today:
+
+* file manipulation,
+* folder/directory manipulation,
+* first steps to read/write data from local data source,
+* first steps with url and csv loading from the web.
+
 
 **Next session:** practice the stuff reviewed here.
+
 **Upcoming theme:** data visualisation: graphs using *ggplot2* and maps using *leaflet*.
 
 Assignement
@@ -317,6 +352,8 @@ Assignement
 
 Do something with :
 * either csv file,
+* or file manipulation,
 * or an URL connection,
 * or even better combine both...
 
+and submit it to the others on your github fork or per mail.

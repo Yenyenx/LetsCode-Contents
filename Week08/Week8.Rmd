@@ -1,0 +1,190 @@
+---
+title: "Let's Code - Week 8"
+author: "Adrien ROUX"
+date: "February, 2017"
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The topic introduced this week is **Data visualisation** which is a wide topic that covers : 
+
+* 2d plots (histogram, points, lines),
+* 3d plots (3d points, 3d lines,surface,...),
+* geo maps,
+* word clouds,
+* network representations.
+
+# Word clouds
+
+## A first example
+
+We first read some text.
+
+```{r}
+text <- "Many years ago the great British explorer George Mallory, who 
+was to die on Mount Everest, was asked why did he want to climb 
+it. He said, \"Because it is there.\""
+```
+
+Now, we will perform a series of operations on the text data to simplify it.
+
+```{r}
+library(tm)
+library(SnowballC)
+library(wordcloud)
+
+# 1. we need to create a corpus.
+myCorpus <- Corpus(VectorSource(text)) #tm function
+
+# 2. we convert the corpus to a plain text document.
+myCorpus <- tm_map(myCorpus, PlainTextDocument)
+
+# 3. we remove all punctuation and stopwords. 
+# Stopwords are commonly used words in the English language such as I, me, my, etc. You can see the full list of stopwords using stopwords('english').
+
+myCorpus <- tm_map(myCorpus, removePunctuation)
+myCorpus <- tm_map(myCorpus, removeWords, stopwords('english'))
+
+```
+
+```{r}
+# 4. we perform stemming. 
+# This means that all the words are converted to their stem (Ex: learning -> learn, walked -> walk, etc.). This will ensure that different forms of the word are converted to the same form and plotted only once in the wordcloud.
+
+myCorpus <- tm_map(myCorpus, 
+                   stemDocument)
+```
+
+Now, we plot the wordcloud using a palette of colors instead of just one.
+
+```{r}
+library(RColorBrewer)
+pal <- brewer.pal(6,"Dark2")
+```
+
+*** 
+
+```{r, fig.align='center'}
+ wordcloud(myCorpus, max.words = 100, 
+          scale = c(4,0.5), random.order = FALSE,
+          random.color = TRUE, colors = pal[-(1)],
+          rot.per = 0.5)
+```
+
+## WordCloud2
+
+Here is a somehow more advanced function to create word cloud with advanced features.
+
+```{r, fig.align='center', warning=FALSE}
+library(wordcloud2)
+str(demoFreq)
+wordcloud2(demoFreq)
+head(demoFreq[order(demoFreq$freq, decreasing = T),],10)
+```
+
+Here is the same wordcloud with a shape of *star*.
+
+```{r}
+wordcloud2(demoFreq, size = 0.5, shape = 'star')
+```
+
+## Exercise
+
+Load a text of your choice either stored locally or online and produce a first word cloud.
+
+# 2d plots
+
+3 different plotting systems/solutions:
+
+* **standard method** using base package : plot (**ugly but simple** so fits your prupose if you quickly want to have an overview of your data in console mode),
+* **lattice graphics** : emphasis on multivariate data (**ugly and complex** so I don't present it)
+* **ggplot2** : *so pretty* but not so simple at the beginning. The best option to put graphs in a report. 
+
+***
+
+```{r, fig.align='center'}
+x1 <- seq(from=-5,to=5,by=0.25)
+y1 <- sapply(x1, function(x){x^2})
+plot(x1,y1, type="point", main= "Example with plot function")
+
+x2 <- seq(from=-5,to=5,by=0.5)
+y2 <- sapply(x2, function(x){(x-1)^2})
+lines(x2,y2, col="red")
+```
+
+## ggplot2
+
+```{r, fig.align='center'}
+library(ggplot2)
+str(iris)
+qplot(Sepal.Length, 
+      Sepal.Width,
+      data=iris, 
+      color= Species) + facet_grid(.~Species)
+```
+
+# Geo maps
+
+## leaflet
+
+<https://rstudio.github.io/leaflet/>
+
+```{r, fig.align='center'}
+library(leaflet)
+
+m <- leaflet() %>%
+  setView(lng=2.35, lat = 48.85, zoom = 11) %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=2.35, lat=48.85, popup="Center of Paris") %>%
+  addMarkers(lng=2.23, lat=48.88, popup="La Defense") %>%
+  addCircleMarkers(lng=2.3, lat=48.86, color = "#F00", radius= 20)
+m  # Print the map
+```
+
+```{r}
+# add some circles to a map
+df = data.frame(Lat = 48.85 + rnorm(10,0,0.1), Long = 2.35 + rnorm(10,0,0.1))
+leaflet(df) %>% 
+  setView(lng=2.35, lat = 48.85, zoom = 10) %>%
+  addTiles() %>%
+  addCircles(lng = ~Long, lat = ~Lat, color = "#000")
+```
+
+```{r}
+library(maps)
+mapFrance = map("france", fill= TRUE, plot= FALSE)
+
+str(mapFrance)
+
+leaflet(data = mapFrance) %>% addTiles() %>%
+  addPolygons(fillColor = topo.colors(5, alpha = NULL), stroke = FALSE)
+```
+
+# 3d plots
+
+```{r}
+
+```
+
+# Network representation
+
+<http://kateto.net/network-visualization>
+
+
+```{r}
+# nodes <- read.csv("Dataset1-Media-Example-NODES.csv", header=T, as.is=T)
+# links <- read.csv("Dataset1-Media-Example-EDGES.csv", header=T, as.is=T)
+```
+
+```{r}
+library('igraph')
+# net <- graph_from_data_frame(d=links, vertices=nodes, directed=T) 
+# net
+```
+
