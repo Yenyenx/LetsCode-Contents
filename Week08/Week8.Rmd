@@ -21,8 +21,9 @@ The topic introduced this week is **Data visualisation** which is a wide topic t
 * 2d plots (histogram, points, lines),
 * 3d plots (3d points, 3d lines,surface,...),
 * geo maps,
-* word clouds,
-* network representations.
+* word clouds.
+
+Further data visualisation are available, e.g. pie charts. If I had to present one more, it would be network representations. Unfortunaltely, I need more practice on this topic to be able to present you something.
 
 ***
 
@@ -168,7 +169,7 @@ leaflet(df) %>%
 There is a lot of packages offering 3d visualisations. plotly is one of my favorites.
 <https://plot.ly/r/>
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(plotly)
 # economics : US economic time series
 p <- plot_ly(economics, x = ~date, y = ~unemploy / pop)
@@ -205,4 +206,12 @@ plot_ly(
   mode = 'lines' )
 ```
 
+# Conclusion
 
+We reviewed various kinds of data visualisation achievable using R and extension packages. The legacy packages are now completely outdated. Most people use at least **ggplot2** and even **plotly** which allows interactive graphs using html.
+
+Word clouds are really just for fun... 
+
+# Assignement for next week
+
+Practice at least one of each graph using any kind of data.
