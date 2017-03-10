@@ -20,9 +20,11 @@ Here is a **quick overview** of what we've done so far and where we currently st
 * **Week5**: How do I define a custom function ? Further examples on control structures. (Practice session)
 * **Week6**: How to get things in and out of my program ?
 * **Week7**: (Practice session)
-* **Week8**: **Data visualisation: 2d plot, 3d plot, leaflet, word cloud, network.**
-* **Week9**: (Practice session)
-* **Week10**: First steps with shiny and shinydashboard
-* **Week11**: (Practice session)
-* **Week12**: ...
+* **Week8**: Data visualisation: 2d plot, 3d plot, leaflet, word cloud, network.
+* **Week9**: **(Practice session using 2d/3d plot, leaflet still needs to be fixed)**
+* **Week10**: (Practice session)
+* **Week11**: First steps with shiny and shinydashboard
+* **Week12**: (Practice session)
+* **Week13**: ...
+* **Week14**: ...
 
