@@ -1,0 +1,67 @@
+---
+title: "example_Mathilde"
+author: "Mathilde"
+date: "March 10, 2017"
+output: 
+  html_document: 
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Exercice 1
+
+use **plot** command
+faire un graphique *moche* en 2D
+use rnorm
+```{r}
+set.seed(7)
+x <- rnorm (10)
+y <- runif (10)
+
+plot (x,y, main="tableau en 2D", pch=2, col='green')
+
+
+
+
+
+```
+
+
+# Exercice 1 bis avec GG plot
+
+```{r}
+library(ggplot2)
+
+x <- seq(from= -5, to =5, by= 0.1)
+fx <- dnorm(x)
+gx <- x*x
+ix <- as.factor(round(x,0))
+
+values <- data.frame(x, fx, gx, ix)
+head(values)
+
+# quick plot w ggplot2
+qplot(x, fx, data=values, color= ix, main= "tableau arc en ciel", geom="line", size=2, alpha= 20)
+
+```
+
+# using leaflet
+```{r}
+library(leaflet)
+
+m <- leaflet() %>%
+  setView(lng=2.35, lat = 48.85, zoom = 10) %>%
+  addTiles()
+m
+  
+
+
+```
+
+
