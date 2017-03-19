@@ -22,8 +22,8 @@ Here is a **quick overview** of what we've done so far and where we currently st
 * **Week7**: (Practice session)
 * **Week8**: Data visualisation: 2d plot, 3d plot, leaflet, word cloud, network.
 * **Week9**: (Practice session using 2d/3d plot, leaflet still needs to be fixed)
-* **Week10**: **(Practice session)**
-* **Week11**: First steps with shiny and shinydashboard
+* **Week10**: (Practice session)
+* **Week11**: **First steps with shiny and shinydashboard**
 * **Week12**: (Practice session)
 * **Week13**: ...
 * **Week14**: ...
