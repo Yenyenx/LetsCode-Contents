@@ -25,6 +25,13 @@ Here is a **quick overview** of what we've done so far and where we currently st
 * **Week10**: (Practice session)
 * **Week11**: **First steps with shiny and shinydashboard**
 * **Week12**: (Practice session)
-* **Week13**: ...
-* **Week14**: ...
+* **Week13**: Further customize the reactions of your shiny app
+* **Week14**: (Practice session)
+* **Week15**: Introduction to Shiny dashboards
+* **Week16**: (Practice session)
+* **Week17**: Further customize the reactions of your shiny dashboard
+* **Week18**: (Practice session)
+* **Week19**: ...
+* **Week20**: ...
+
 
