@@ -11,3 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Example 1
 
+```{r}
+library(plotly)
+names(iris)
+str(airquality)
+plot_ly(iris, x= ~Sepal.Length, y= ~Sepal.Width)
+```
+
