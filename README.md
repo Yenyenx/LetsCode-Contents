@@ -23,15 +23,17 @@ Here is a **quick overview** of what we've done so far and where we currently st
 * **Week8**: Data visualisation: 2d plot, 3d plot, leaflet, word cloud, network.
 * **Week9**: (Practice session using 2d/3d plot, leaflet still needs to be fixed)
 * **Week10**: (Practice session)
-* **Week11**: **First steps with shiny and shinydashboard**
-* **Week12**: (Practice session)
-* **Week13**: Further customize the reactions of your shiny app
+* **Week11**: First steps with shiny
+* **Week12**: **(Practice session)**
+* **Week13**: Further customize the reactions and appearances of your shiny app
 * **Week14**: (Practice session)
-* **Week15**: Introduction to Shiny dashboards
+* **Week15**: Introduction to shiny dashboards
 * **Week16**: (Practice session)
 * **Week17**: Further customize the reactions of your shiny dashboard
 * **Week18**: (Practice session)
-* **Week19**: ...
-* **Week20**: ...
+* **Week19**: ... Start working on a common challenge... Split the code to be produce among trainees.
+* **Week20**: ... Discussion about issues encountered with the challenge... Maybe focus on a specific code part.
+* **Week21**: ...
+* **Week22**: ...
 
 
