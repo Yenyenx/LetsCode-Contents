@@ -993,9 +993,37 @@ Your R session will be busy while the Hello Shiny app is active, so you will not
 
 <p>You can run a Shiny app by giving the name of its directory to the function runApp. For example if your Shiny app is in a directory called my_app, run it with the following code:</p>
 
-<pre><code>Error in shinyAppDir(x) : 
-  No Shiny application exists at the path &quot;my_app&quot;
+<pre><code class="r">library(shiny)
+if(interactive()) {
+  runApp(&quot;my_app&quot;)  
+}
 </code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>A slightly more advanced app</h3>
+<div class="slideContent small-code" >
+<p>Note: runApp is similar to read.csv, read.table, and many other functions in R. The first argument of runApp is the filepath from your working directory to the app&#39;s directory. The code above assumes that the app directory is in your working directory. In this case, the filepath is just the name of the directory.</p>
+
+<pre><code class="r">library(shiny)
+if(interactive()){
+  runApp(&#39;./Week11/MyGreatApp&#39;)  
+}
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Let&#x27;s practice</h3>
+<div class="slideContent small-code" >
+<p>Have a look at the example presented in the shiny online gallery available at <a href="https://shiny.rstudio.com/gallery/">https://shiny.rstudio.com/gallery/</a>. </p>
+
+<p>Once you clic on one example, you can access the code for <strong>ui.R</strong> and <strong>server.R</strong>. I suggest you start with simple examples and then add more complexity.</p>
+
+<p><strong>HAVE FUN!</strong></p>
 
 </div>
 
