@@ -9,9 +9,98 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Exercise 1
+# Exercise 1: 2d plots
+
+## Using basic plot
+
+Use **plot** command.
+Use **rnorm** or **runif**.
+
+```{r}
+set.seed(124)
+x <- rnorm(100)
+y <- rnorm(100)
+
+plot(x,y, main="X-Y", pch=19, col= 'red')
+```
+
+
+## Using ggplot2
+
+ggplot2 does not belong to the base package so load library first.
+
+```{r}
+library(ggplot2)
+
+x <- seq(to= 5, from= -5, by= 0.1)
+fx <- dnorm(x)
+gx <- x*x
+ix <- as.factor(round(x,0))
+
+
+values <- data.frame(x,fx,gx,ix)
+head(values)
+
+# quick plot with ggplot2
+qplot(x,fx, data= values, 
+      color= '1', 
+      main= "Mon super graph", 
+      geom= "point", 
+      size= gx, alpha= gx)
+
+```
+
+## Using plotly
 
 ```{r}
 
 ```
+
+
+# Exercice 2: 3d plots
+
+using plotly as basic functions are just too ugly.
+
+```{r}
+
+```
+
+# Exercice .: basic geomap
+
+```{r}
+library(leaflet)
+
+x <- 2.3
+y <- 48.8
+
+m <- leaflet() %>%
+  setView(lng=2.35, lat = 48.85, zoom = 11) %>%
+  addTiles()%>%
+  addMarkers(lng=x, lat=y, popup="Center of Paris") 
+m
+m <- leaflet() %>%
+  setView(lng=2.35, lat = 48.85, zoom = 11) %>%
+  addTiles()
+m
+
+# %>%
+#   addTiles() %>%  # Add default OpenStreetMap map tiles
+#   addMarkers(lng=2.35, lat=48.85, popup="Center of Paris") %>%
+#   addMarkers(lng=2.23, lat=48.88, popup="La Defense") %>%
+#   addCircleMarkers(lng=2.3, lat=48.86, color = "#F00", radius= 20)
+# m  # Print the map
+```
+
+
+# Exercice .: Basic wordcloud
+
+```{r}
+
+```
+
+# Exercice . : Advanced text mining
+
+Follow the tutorial proposed by RStudio.
+
+<https://rstudio-pubs-static.s3.amazonaws.com/31867_8236987cf0a8444e962ccd2aec46d9c3.html>
 
