@@ -1,0 +1,68 @@
+---
+title: "examples Graphs with plotly"
+author: "Mathilde"
+date: "March 17, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+library(dplyr)
+str(airquality)
+
+data <- airquality %>%
+  select(Ozone, Temp, Month)
+  
+str(data)
+```
+< https://plot.ly/r>
+
+```{r}
+library(plotly)
+
+data$MonthName <- month.name[data$Month]
+
+# data$Month <- factor(data$Month, labels= c("May", "June", "July", "August", "September"))
+str(data)
+
+
+
+plot_ly(data, x=~Temp, y=~Ozone, 
+        type= 'scatter', mode= 'markers',
+        color= ~MonthName,
+        hoverinfo= 'text',
+        text= ~paste('Month:', MonthName, 
+                     '</br> Ozone:', Ozone, 
+                     '</br> Temp:', Temp))
+
+```
+
+```{r}
+p <- plot_ly(data, x= ~Ozone,type = 'histogram', color='green')
+p <- layout(p, title= 'Mon graphique')
+p
+```
+
+
+```{r}
+
+plot_ly(data, labels=~MonthName, 
+        type = 'pie', 
+        values =~Ozone,
+        hoverinfo= 'text',
+        text= ~paste('Month:', MonthName, 
+                     '</br> Ozone:', Ozone),
+        hole= 0.9) %>%
+  layout(xaxis=list(showgrid=FALSE, zeroline=FALSE, showticklabels=FALSE), 
+         yaxis=list(showgrid=FALSE, zeroline=FALSE, showticklabels=FALSE), 
+         title= 'Ozone') 
+
+
+
+```
+
+
+
