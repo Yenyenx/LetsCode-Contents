@@ -1,0 +1,48 @@
+---
+title: "Report with floating toc"
+author: "Adrien ROUX"
+date: "March 28, 2017"
+output: 
+  html_document: 
+    css: custom_css_1.css
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown and so much more we can't really discuss here
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots {.tabset}
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### Ex1
+
+```{r pressure1, echo=FALSE}
+plot(pressure)
+```
+
+### Ex2
+
+```{r pressure2, echo=FALSE}
+plot(pressure+1, col='red')
+```
