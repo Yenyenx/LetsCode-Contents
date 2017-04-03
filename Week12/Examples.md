@@ -14,7 +14,6 @@ output:
     * actionButton,
     * dateInput,
     * numericInput,
-    * dateInput,
     * submitButton,
     * tabPanel,
     
@@ -25,5 +24,6 @@ output:
     
     * renderPlot,
     * renderText,
-    * renderDataTable.
-    * renderLeaflet
+    * renderDataTable,
+    * renderLeaflet.
+    
